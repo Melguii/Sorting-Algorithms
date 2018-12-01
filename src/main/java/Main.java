@@ -7,12 +7,19 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        /**
-         * Llegim el fitxer Json
-         */
+
+        //Llegim el fitxer Json amb array de object perque tenim la informacio al json de una sola classe, no de varies
         Gson gson = new Gson();
         FileReader f = new FileReader("datasets/xs_dataset.json");
         User[] users = gson.fromJson(f, User[].class);
 
+        //Referenciem els follows de cada usuari
+
+        for (int i = 0; i < users.length; i++) {
+            users[i].referenciarSeguidors(users);
+        }
+        for (int i = 0; i < users[0].getConnections().size(); i++) {
+            System.out.println(users[0].getLink().get(i).getUsername());
+        }
     }
 }

@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
     private String              username;
-    private Integer             followers;
-    private Integer             follows;
+    private int                 followers;
+    private int                 follows;
     private List<Connection>    connections;
     private List<Post>          posts;
     private List<Integer>       likedPosts;
@@ -11,12 +12,44 @@ public class User {
     private List<User>          link;                   //Informacio dels usuaris dels quals interacciona/segueix
 
 
+    public User() {
+        this.connections = new ArrayList<Connection>();
+        this.posts = new ArrayList<Post>();
+        this.likedPosts = new ArrayList<Integer>();
+        this.commentedPosts = new ArrayList<Integer>();
+        this.link = new ArrayList<User>();
+    }
+
     public List<User> getLink() {
         return link;
     }
 
     public void setLink(List<User> link) {
         this.link = link;
+    }
+
+    /**
+     * De l'usuari en concret afegim la informació dels usuaris als quals segeuix/interactua
+     * @param u Array que conte la llista de tots els usuaris de la plataforma
+     */
+    public void referenciarSeguidors (User u[]) {
+        boolean trobat;
+        int i;
+
+        for (Connection c: connections) {
+            trobat = false;
+            i = 0;
+
+            while (trobat == false && i < u.length) {
+
+                if (c.getUsername().equals(u[i].getUsername())) {
+                    link.add(u[i]);
+                    trobat = true;
+                }
+
+                i++;
+            }
+        }
     }
 
     public String getUsername() {

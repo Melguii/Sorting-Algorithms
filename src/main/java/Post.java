@@ -1,14 +1,24 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Post {
-    private Integer      id;
-    private Integer      published;
+    private int          id;
+    private int          published;
     private List<Double> location;
     private String       category;
     private List<String> likedBy;
     private List<String> commentedBy;
     private List<User>   like;                //Informacio dels users que han donat like (ho sabem gracies linkedBy)
     private List<User>   comment;             //Informacio dels users que han comentat (ho sabem gracies commentedBy)
+
+
+    public Post(List<Double> location, List<String> likedBy, List<String> commentedBy, List<User> like, List<User> comment) {
+        this.location = new ArrayList<Double>();
+        this.likedBy = new ArrayList<String>();
+        this.commentedBy = new ArrayList<String>();
+        this.like = new ArrayList<User>();
+        this.comment = new ArrayList<User>();
+    }
 
     public Integer getId() {
         return id;

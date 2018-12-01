@@ -10,6 +10,15 @@ public class User {
     private List<Integer>       commentedPosts;
     private List<User>          link;                   //Informacio dels usuaris dels quals interacciona/segueix
 
+
+    public List<User> getLink() {
+        return link;
+    }
+
+    public void setLink(List<User> link) {
+        this.link = link;
+    }
+
     public String getUsername() {
         return username;
     }

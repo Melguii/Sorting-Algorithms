@@ -13,13 +13,21 @@ public class Main {
         FileReader f = new FileReader("datasets/xs_dataset.json");
         User[] users = gson.fromJson(f, User[].class);
 
-        //Referenciem els follows de cada usuari
-
+        //Referenciem els follows de cada usuari i,
+        // cada post amb els Usuaris que li fan like i comentaris per separat
         for (int i = 0; i < users.length; i++) {
             users[i].referenciarSeguidors(users);
+
+            for (int j = 0; j < users[i].getPosts().size(); j++){
+                users[i].getPosts().get(j).referenciarUserLikes(users);
+
+            }
         }
-        for (int i = 0; i < users[0].getConnections().size(); i++) {
-            System.out.println(users[0].getLink().get(i).getUsername());
+
+        //sout
+        for (int i = 0; i < users[0].getPosts().size(); i++) {
+            System.out.println(users[0].getPosts().get(i).getId());
         }
+
     }
 }

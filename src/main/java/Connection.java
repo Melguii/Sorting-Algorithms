@@ -5,11 +5,6 @@ public class Connection {
     private int     likes;
     private int     comments;
 
-
-
-
-
-
     public String getUsername() {
         return username;
     }
@@ -49,4 +44,5 @@ public class Connection {
     public void setComments(int comments) {
         this.comments = comments;
     }
+
 }

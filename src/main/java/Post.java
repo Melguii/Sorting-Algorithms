@@ -8,32 +8,16 @@ public class Post {
     private String       category;
     private List<String> likedBy;
     private List<String> commentedBy;
-    private List<User>   like;                //Informacio dels users que han donat like (ho sabem gracies linkedBy)
-    private List<User>   comment;             //Informacio dels users que han comentat (ho sabem gracies commentedBy)
+    private List<User>   usersLikes;                //Informacio dels users que han donat like (ho sabem gracies linkedBy)
+    private List<User>   usersComments;             //Informacio dels users que han comentat (ho sabem gracies commentedBy)
 
 
-    public Post(List<Double> location, List<String> likedBy, List<String> commentedBy, List<User> like, List<User> comment) {
+    public Post() {
         this.location = new ArrayList<Double>();
         this.likedBy = new ArrayList<String>();
         this.commentedBy = new ArrayList<String>();
-        this.like = new ArrayList<User>();
-        this.comment = new ArrayList<User>();
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getPublished() {
-        return published;
-    }
-
-    public void setPublished(Integer published) {
-        this.published = published;
+        this.usersLikes = new ArrayList<User>();
+        this.usersComments = new ArrayList<User>();
     }
 
     public List<Double> getLocation() {
@@ -68,19 +52,55 @@ public class Post {
         this.commentedBy = commentedBy;
     }
 
-    public List<User> getLike() {
-        return like;
+    public int getId() {
+        return id;
     }
 
-    public void setLike(List<User> like) {
-        this.like = like;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public List<User> getComment() {
-        return comment;
+    public int getPublished() {
+        return published;
     }
 
-    public void setComment(List<User> comment) {
-        this.comment = comment;
+    public void setPublished(int published) {
+        this.published = published;
+    }
+
+    public List<User> getUsersLikes() {
+        return usersLikes;
+    }
+
+    public void setUsersLikes(List<User> usersLikes) {
+        this.usersLikes = usersLikes;
+    }
+
+    public List<User> getUsersComments() {
+        return usersComments;
+    }
+
+    public void setUsersComments(List<User> usersComments) {
+        this.usersComments = usersComments;
+    }
+
+    public void referenciarUserLikes (User u[]){
+        boolean trobat;
+        int i;
+
+        for (String likedBy: this.likedBy) {
+            trobat = false;
+            i = 0;
+
+            while (trobat == false && i < u.length) {
+
+                if (likedBy.equals(u[i].getUsername())) {
+                    usersLikes.add(u[i]);
+                    trobat = true;
+                }
+
+                i++;
+            }
+        }
     }
 }

@@ -28,30 +28,6 @@ public class User {
         this.link = link;
     }
 
-    /**
-     * De l'usuari en concret afegim la informació dels usuaris als quals segeuix/interactua
-     * @param u Array que conte la llista de tots els usuaris de la plataforma
-     */
-    public void referenciarSeguidors (User u[]) {
-        boolean trobat;
-        int i;
-
-        for (Connection c: connections) {
-            trobat = false;
-            i = 0;
-
-            while (trobat == false && i < u.length) {
-
-                if (c.getUsername().equals(u[i].getUsername())) {
-                    link.add(u[i]);
-                    trobat = true;
-                }
-
-                i++;
-            }
-        }
-    }
-
     public String getUsername() {
         return username;
     }
@@ -60,19 +36,19 @@ public class User {
         this.username = username;
     }
 
-    public Integer getFollowers() {
+    public int getFollowers() {
         return followers;
     }
 
-    public void setFollowers(Integer followers) {
+    public void setFollowers(int followers) {
         this.followers = followers;
     }
 
-    public Integer getFollows() {
+    public int getFollows() {
         return follows;
     }
 
-    public void setFollows(Integer follows) {
+    public void setFollows(int follows) {
         this.follows = follows;
     }
 
@@ -107,4 +83,30 @@ public class User {
     public void setCommentedPosts(List<Integer> commentedPosts) {
         this.commentedPosts = commentedPosts;
     }
+
+    /**
+     * De l'usuari en concret afegim la informació dels usuaris als quals segeuix/interactua
+     * @param u Array que conte la llista de tots els usuaris de la plataforma
+     */
+    public void referenciarSeguidors (User u[]) {
+        boolean trobat;
+        int i;
+
+        for (Connection c: connections) {
+            trobat = false;
+            i = 0;
+
+            while (trobat == false && i < u.length) {
+
+                if (c.getUsername().equals(u[i].getUsername())) {
+                    link.add(u[i]);
+                    trobat = true;
+                }
+
+                i++;
+            }
+        }
+    }
+
+
 }

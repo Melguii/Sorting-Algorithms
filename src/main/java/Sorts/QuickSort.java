@@ -33,7 +33,7 @@ public class QuickSort {
         s = array_aux_ij[0];
         t = array_aux_ij[1];
         mig = (array_aux_ij[0] + array_aux_ij[1])/2;
-        pivot = p.get(array_aux_ij[1]/2);
+        pivot = p.get(mig);
         while (s <= t) {
             while (c.comparar(p.get(s),pivot)) {
                 s = s + 1;

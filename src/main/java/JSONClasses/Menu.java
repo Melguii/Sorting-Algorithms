@@ -1,3 +1,5 @@
+package JSONClasses;
+
 import java.util.Scanner;
 
 public class Menu {

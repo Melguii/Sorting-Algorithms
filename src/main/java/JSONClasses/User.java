@@ -1,3 +1,7 @@
+package JSONClasses;
+
+import JSONClasses.Connection;
+
 import java.util.ArrayList;
 import java.util.List;
 

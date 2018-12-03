@@ -1,4 +1,5 @@
 package Compare;
 
-public class Comparator {
+public interface Comparator {
+    public boolean comparar (int num1, int num2);
 }

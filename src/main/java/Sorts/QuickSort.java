@@ -23,6 +23,7 @@ public class QuickSort {
             p = quickSort(p,c,i,t);
             p = quickSort(p,c,s,j);
         }
+        return p;
     }
     public int [] particio (ArrayList <Post> p, int array_aux_ij[], Comparator c) {
         int mig;
@@ -35,10 +36,10 @@ public class QuickSort {
         mig = (array_aux_ij[0] + array_aux_ij[1])/2;
         pivot = p.get(mig);
         while (s <= t) {
-            while (c.comparar(p.get(s),pivot)) {
+            while (c.compararp2top1(p.get(s),pivot)) {
                 s = s + 1;
             }
-            while (c.comparar(p.get(t),pivot)) {
+            while (c.compararp1top2(p.get(t),pivot)) {
                 t = t - 1;
             }
             if (s < t) {

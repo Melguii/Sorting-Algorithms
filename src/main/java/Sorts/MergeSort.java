@@ -29,7 +29,7 @@ public class MergeSort {
         k2 = mig;
         cursor = 0;
         while ((k1 < mig) && (k2 < j) ) {
-            if (c.comparar(p.get(k1), p.get(k2))) {
+            if (c.compararp2top1IncludeEqual(p.get(k1), p.get(k2))) {
                 b.set(cursor,p.get(k1));
                 k1 = k1 + 1;
                 cursor = cursor + 1;

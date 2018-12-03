@@ -1,5 +1,4 @@
 import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,6 +11,7 @@ public class Main {
         Gson gson = new Gson();
         FileReader f = new FileReader("datasets/xs_dataset.json");
         User[] users = gson.fromJson(f, User[].class);
+
         //Referenciem els follows de cada usuari i,
         // cada post amb els Usuaris que li fan like i comentaris per separat
         for (int i = 0; i < users.length; i++) {
@@ -23,8 +23,8 @@ public class Main {
         }
 
         //Comprovacio de userComments
-        for (int i = 0; i < users[0].getPosts().get(0).getUsersComments().size(); i++) {
-            System.out.println(users[0].getPosts().get(0).getUsersComments().get(i).getUsername());
+        for (int i = 0; i < users[0].getPosts().get(1).getUsersComments().size(); i++) {
+            System.out.println(users[0].getPosts().get(1).getUsersComments().get(i).getUsername());
         }
     }
 }

@@ -30,7 +30,7 @@ public class Menu {
                     }
                 }
                 c = new CompareTemporalitat();
-                m.mergeSort(p,c,0, (p.size()-1));
+                m.mergeSort (p,c,0, (p.size()-1));
                 int cursor = 1;
                 for(Post p_aux_2:p) {
                     System.out.println(cursor + " " +p_aux_2.getId());

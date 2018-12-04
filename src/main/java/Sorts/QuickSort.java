@@ -4,9 +4,10 @@ import Compare.Comparator;
 import JSONClasses.Post;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class QuickSort {
-    public ArrayList <Post> quickSort (ArrayList<Post> p, Comparator c, int i, int j) {
+    public List<Post> quickSort (List<Post> p, Comparator c, int i, int j) {
         int s;
         int t;
         int array_aux_ij [] = new int [2];
@@ -25,7 +26,7 @@ public class QuickSort {
         }
         return p;
     }
-    private int [] particio (ArrayList <Post> p, int array_aux_ij[], Comparator c) {
+    private int [] particio (List <Post> p, int array_aux_ij[], Comparator c) {
         int mig;
         Post pivot;
         Post tmp = new Post();

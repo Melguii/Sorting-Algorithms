@@ -3,10 +3,12 @@ package Sorts;
 import Compare.Comparator;
 import JSONClasses.Post;
 
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class MergeSort {
-    public ArrayList <Post> mergeSort (ArrayList<Post> p, Comparator c, int i, int j) {
+    public List<Post> mergeSort (List<Post> p, Comparator c, int i, int j) {
         int mig;
         if (i >= j) {
             return p;
@@ -19,8 +21,8 @@ public class MergeSort {
         }
         return p;
     }
-    private  ArrayList<Post> merge (ArrayList<Post> p ,int i, int mig, int j, Comparator c) {
-        ArrayList<Post> b = new ArrayList<Post> ();
+    private  List<Post> merge (List<Post> p ,int i, int mig, int j, Comparator c) {
+        List<Post> b = new ArrayList<Post>();
         int k1;
         int k2;
         int cursor;

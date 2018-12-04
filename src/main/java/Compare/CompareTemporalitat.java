@@ -1,6 +1,7 @@
 package Compare;
 
 import JSONClasses.Post;
+import javafx.geometry.Pos;
 
 
 public class CompareTemporalitat implements Comparator {
@@ -44,5 +45,24 @@ public class CompareTemporalitat implements Comparator {
             b = true;
         }
         return b;
+    }
+
+    /**
+     *
+     * @param post1 Primer post que volem comparar
+     * @param post2 Segon post que volem comparar
+     * @return
+     */
+    public boolean compararDigits(Post post1, Post post2){
+        boolean b = false;
+        if (post1.getPublished() > post2.getPublished()) {
+
+            b = true;
+        }
+
+        return b;
+    }
+    public float retornarValor (Post post) {
+        return post.getPublished();
     }
 }

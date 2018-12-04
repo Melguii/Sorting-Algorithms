@@ -7,6 +7,8 @@ import java.io.FileReader;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
+        System.out.println(80.2%10);
+
         //Llegim el fitxer Json amb array de object perque tenim la informacio al json de una sola classe, no de varies
         Gson gson = new Gson();
         Menu menu_fitxers = new Menu();

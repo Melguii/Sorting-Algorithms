@@ -21,7 +21,7 @@ public class MergeSort {
         }
         return p;
     }
-    private  List<Post> merge (List<Post> p ,int i, int mig, int j, Comparator c) {
+    private List<Post> merge (List<Post> p ,int i, int mig, int j, Comparator c) {
         List<Post> b = new ArrayList<Post>();
         int k1;
         int k2;

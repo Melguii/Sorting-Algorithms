@@ -2,7 +2,6 @@ package Sorts;
 
 import Compare.Comparator;
 import JSONClasses.Post;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +11,7 @@ public class QuickSort {
         int t;
         int array_aux_ij [] = new int [2];
         int array_aux_st [] = new int [2];
+
         if (i >= j) {
             return p;
         }
@@ -35,7 +35,7 @@ public class QuickSort {
         s = array_aux_ij[0];
         t = array_aux_ij[1];
         mig = (array_aux_ij[0] + array_aux_ij[1])/2;
-        pivot = p.get(mig );
+        pivot = p.get(mig);
         while (s <= t) {
             while (c.compararp2top1(p.get(s),pivot)) {
                 s = s + 1;
@@ -60,6 +60,7 @@ public class QuickSort {
         int [] array_aux_st = new int[2];
         array_aux_st[0]= s;
         array_aux_st[1]=t;
+
         return array_aux_st;
     }
 }

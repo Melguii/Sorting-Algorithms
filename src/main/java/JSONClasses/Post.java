@@ -12,7 +12,7 @@ public class Post {
     private List<String> commented_by;
     private List<User>   usersLikes;                //Informacio dels users que han donat like (ho sabem gracies linkedBy)
     private List<User>   usersComments;             //Informacio dels users que han comentat (ho sabem gracies commentedBy)
-    private float        comparacioUbicacio;
+    private float        comparacioUbicacio;        //Distancia entre usuaris
 
     /**
      * Retorna la diferencia en distancia calculada en Haversine entre la ubicacio de referencia i l'ubicacio del Post

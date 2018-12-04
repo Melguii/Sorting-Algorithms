@@ -3,6 +3,7 @@ package JSONClasses;
 import Compare.*;
 import Sorts.MergeSort;
 import Sorts.QuickSort;
+import Sorts.SelectionSort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,19 +24,31 @@ public class Menu {
         switch (opcio) {
             case 1:
                 MergeSort m = new MergeSort();
+                SelectionSort s = new SelectionSort();
                 List<Post> p = new ArrayList<Post>();
+
                 for (User u:users) {
                     for (Post p_aux:(u.getPosts())) {
                         p.add(p_aux);
                     }
                 }
+
                 c = new CompareTemporalitat();
+
+                s.selectionSort(p,c);
                 m.mergeSort (p,c,0, (p.size()-1));
+
                 int cursor = 1;
+
                 for(Post p_aux_2:p) {
                     System.out.println(cursor + " " +p_aux_2.getId());
                     cursor++;
                 }
+
+
+
+
+
                 break;
             case 2:
                 break;

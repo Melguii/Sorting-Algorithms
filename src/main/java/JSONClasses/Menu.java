@@ -1,20 +1,37 @@
 package JSONClasses;
 
+import Compare.*;
+import Sorts.QuickSort;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
     private int opcio;
 
-    public void implementacioMenu () {
+    public void implementacioMenu (User [] users) {
         do {
             mostrarMenu();
-            seleccioMenu();
+            seleccioMenu(users);
         } while (opcio != 4);
     }
 
-    private void seleccioMenu () {
+    private void seleccioMenu (User[] users) {
+        Comparator c;
         switch (opcio) {
             case 1:
+                QuickSort q = new QuickSort();
+                ArrayList<Post> p = new ArrayList<Post>();
+                for (User u:users) {
+                    for (Post p_aux:(u.getPosts())) {
+                        p.add(p_aux);
+                    }
+                }
+                c = new CompareTemporalitat();
+                q.quickSort(p,c,0, (p.size()-1));
+                for(Post p_aux_2:p) {
+                    System.out.println(p_aux_2.getId());
+                }
                 break;
             case 2:
                 break;

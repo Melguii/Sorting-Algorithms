@@ -1,3 +1,4 @@
+import JSONClasses.Menu;
 import JSONClasses.User;
 import com.google.gson.Gson;
 import java.io.File;
@@ -22,10 +23,7 @@ public class Main {
                 users[i].getPosts().get(j).referenciarUserComments(users);
             }
         }
-
-        //Comprovacio de userComments
-        for (int i = 0; i < users[0].getPosts().get(1).getUsersComments().size(); i++) {
-            System.out.println(users[0].getPosts().get(1).getUsersComments().get(i).getUsername());
-        }
+        Menu m = new Menu();
+        m.implementacioMenu(users);
     }
 }

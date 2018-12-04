@@ -1,9 +1,11 @@
 package JSONClasses;
 
 import Compare.*;
+import Sorts.MergeSort;
 import Sorts.QuickSort;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -20,17 +22,19 @@ public class Menu {
         Comparator c;
         switch (opcio) {
             case 1:
-                QuickSort q = new QuickSort();
-                ArrayList<Post> p = new ArrayList<Post>();
+                MergeSort m = new MergeSort();
+                List<Post> p = new ArrayList<Post>();
                 for (User u:users) {
                     for (Post p_aux:(u.getPosts())) {
                         p.add(p_aux);
                     }
                 }
                 c = new CompareTemporalitat();
-                q.quickSort(p,c,0, (p.size()-1));
+                m.mergeSort(p,c,0, (p.size()-1));
+                int cursor = 1;
                 for(Post p_aux_2:p) {
-                    System.out.println(p_aux_2.getId());
+                    System.out.println(cursor + " " +p_aux_2.getId());
+                    cursor++;
                 }
                 break;
             case 2:

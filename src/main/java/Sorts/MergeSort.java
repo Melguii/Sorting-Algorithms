@@ -26,33 +26,33 @@ public class MergeSort {
         int cursor;
         int kr;
         k1 = i;
-        k2 = mig;
+        k2 = mig + 1;
         cursor = 0;
-        while ((k1 < mig) && (k2 < j) ) {
+        while ((k1 <= mig) && (k2 <= j) ) {
             if (c.compararp2top1IncludeEqual(p.get(k1), p.get(k2))) {
-                b.set(cursor,p.get(k1));
+                b.add(p.get(k1));
                 k1 = k1 + 1;
                 cursor = cursor + 1;
             }
             else {
-                b.set(cursor, p.get(k2));
+                b.add(p.get(k2));
                 k2 = k2 + 1;
                 cursor = cursor + 1;
             }
         }
-        while (k1 < mig) {
-            b.set(cursor,p.get(k1));
+        while (k1 <= mig) {
+            b.add(p.get(k1));
             k1 = k1 + 1;
             cursor = cursor + 1;
         }
-        while (k2 < j) {
-            b.set(cursor, p.get(k2));
+        while (k2 <= j) {
+            b.add(p.get(k2));
             k2 = k2 + 1;
             cursor = cursor + 1;
         }
         cursor = 0;
         kr = i;
-        while (kr < j) {
+        while (kr <= j) {
             p.set(kr,b.get(cursor));
             kr = kr + 1;
             cursor = cursor + 1;

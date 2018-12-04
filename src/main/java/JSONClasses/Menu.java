@@ -5,6 +5,7 @@ import Sorts.MergeSort;
 import Sorts.QuickSort;
 import Sorts.SelectionSort;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -103,6 +104,61 @@ public class Menu {
         System.out.println("2.Fent un MergeSort, soc una persona practica");
         System.out.println("3.Fent un RadixSort, he aprovat Mates");
         System.out.println("4.Fent un SelectionSort, m'agraden les tortugues");
+    }
+
+    public FileReader menuFitxers() {
+        int opcio_fitxer;
+        String nom_fitxer;
+        FileReader fitxer;
+        do {
+            mostrarMenuFitxers ();
+            opcio_fitxer = demanarOpcio();
+            fitxer = seleccioFitxer(opcio_fitxer);
+        } while(fitxer == null && opcio_fitxer != 5);
+        return fitxer;
+    }
+    private FileReader seleccioFitxer (int opcio_fitxer) {
+        FileReader fitxer = null;
+        String ubicacio = new String();
+        switch (opcio_fitxer) {
+            case 1:
+                ubicacio= "datasets/xs_dataset.json";
+                break;
+            case 2:
+                ubicacio = "datasets/s_dataset.json";
+                break;
+            case 3:
+                ubicacio = "datasets/m_dataset.json";
+                break;
+            case 4:
+                System.out.println("Nom del fitxer que es vol obrir:");
+                InputStreamReader tmp = new InputStreamReader(System.in);
+                BufferedReader sc = new BufferedReader (tmp);
+                try {
+                    ubicacio = "datasets/" + sc.readLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 5:
+                break;
+        }
+        if (opcio_fitxer >= 1 && opcio_fitxer <= 4) {
+            try {
+                fitxer = new FileReader(ubicacio);
+            } catch (FileNotFoundException e) {
+                System.out.println("Error fitxer especificat no trobat (ha d'estar a la carpeta datasets),no ens petaras \nel programa tan facilment, fem PAED (⌐■_■)");
+            }
+        }
+        return fitxer;
+    }
+    private void mostrarMenuFitxers () {
+        System.out.println("Selecciona el fitxer que vols obrir");
+        System.out.println("1.Fitxer xs_dataset.json");
+        System.out.println("2.Fitxer s_dataset.json");
+        System.out.println("3.Fitxer m_dataset.json");
+        System.out.println("4.Tinc fitxer personalitzat, soc informatic/a");
+        System.out.println("5.Ho reconec, soc de ADE, treiueme d'aqui ಡ_ಡ");
     }
 
 }

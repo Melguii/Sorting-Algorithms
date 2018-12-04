@@ -12,6 +12,22 @@ public class Post {
     private List<String> commented_by;
     private List<User>   usersLikes;                //Informacio dels users que han donat like (ho sabem gracies linkedBy)
     private List<User>   usersComments;             //Informacio dels users que han comentat (ho sabem gracies commentedBy)
+    private float        comparacioUbicacio;
+
+    /**
+     * Retorna la diferencia en distancia calculada en Haversine entre la ubicacio de referencia i l'ubicacio del Post
+     * @return Distancia en Haversine
+     */
+    public float getComparacioUbicacio() {
+        return comparacioUbicacio;
+    }
+    /**
+     * Estableix la diferencia en distancia calculada en Haversine
+     * @return Distancia en Haversine
+     */
+    public void setComparacioUbicacio(float comparacioUbicacio) {
+        this.comparacioUbicacio = comparacioUbicacio;
+    }
 
     /**
      * Constructor de Post, necessari per establir a de quin tipus concret es la interficie List

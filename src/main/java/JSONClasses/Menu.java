@@ -21,34 +21,16 @@ public class Menu {
 
     private void seleccioMenu (User[] users) {
         Comparator c;
+        List<Post> p = new ArrayList<Post>();
+        for (User u:users) {
+            for (Post p_aux:(u.getPosts())) {
+                p.add(p_aux);
+            }
+        }
         switch (opcio) {
             case 1:
-                MergeSort m = new MergeSort();
-                SelectionSort s = new SelectionSort();
-                List<Post> p = new ArrayList<Post>();
-
-                for (User u:users) {
-                    for (Post p_aux:(u.getPosts())) {
-                        p.add(p_aux);
-                    }
-                }
-
                 c = new CompareTemporalitat();
-
-                s.selectionSort(p,c);
-                m.mergeSort (p,c,0, (p.size()-1));
-
-                int cursor = 1;
-
-                for(Post p_aux_2:p) {
-                    System.out.println(cursor + " " +p_aux_2.getId());
-                    cursor++;
-                }
-
-
-
-
-
+                menuOrdenacio(p,c);
                 break;
             case 2:
                 break;
@@ -68,14 +50,59 @@ public class Menu {
         System.out.println("\t2.Ordenar segons Ubicacio");
         System.out.println("\t3.Ordenar segons una combinacio de prioritats");
         System.out.println("\t4.Sortir");
-        demanarOpcio();
+        opcio = demanarOpcio();
     }
 
-    private void demanarOpcio () {
+    private int demanarOpcio () {
         System.out.println("Introdueix opcio: ");
         Scanner sc = new Scanner (System.in);
-        this.opcio = sc.nextInt();
+        return sc.nextInt();
+    }
+    private void menuOrdenacio(List<Post>p, Comparator c) {
+        int opcio_ordenacio;
+        do {
+            mostrarMenuOrdenacio();
+            opcio_ordenacio = demanarOpcio();
+            seleccioOrdenacio(p,c, opcio_ordenacio);
+        } while(opcio_ordenacio < 1 || opcio_ordenacio > 4);
     }
 
+    private void seleccioOrdenacio (List<Post>p, Comparator c, int opcio_ordenacio) {
+        switch (opcio_ordenacio) {
+            case 1:
+                QuickSort q = new QuickSort();
+                q.quickSort(p,c,0, p.size()-1);
+                break;
+            case 2:
+                MergeSort m = new MergeSort();
+                m.mergeSort(p,c,0,p.size()-1);
+                break;
+            case 3:
+                break;
+            case 4:
+                SelectionSort s = new SelectionSort();
+                s.selectionSort(p,c);
+                break;
+            default:
+                System.out.println("Opcio no valida, crec que t'has equivocat de carrera ༼ つ ◕_◕ ༽つ\n");
+        }
+        if (opcio_ordenacio >= 1 && opcio_ordenacio <= 4) {
+            int cursor = 1;
+            System.out.println("\nORDENACIO\n");
+            for (Post p_aux:p) {
+                System.out.println(cursor+"."+ " " + p_aux.getId());
+                cursor++;
+            }
+            System.out.println("\n");
+        }
+
+    }
+    private void mostrarMenuOrdenacio () {
+        System.out.println("De quina forma vols stalkejar?:");
+        System.out.println("1.Fent un QuickSort, corre como el viento perdigon");
+        System.out.println("2.Fent un MergeSort, soc una persona practica");
+        System.out.println("3.Fent un RadixSort, he aprovat Mates");
+        System.out.println("4.Fent un SelectionSort, m'agraden les tortugues");
+    }
 
 }

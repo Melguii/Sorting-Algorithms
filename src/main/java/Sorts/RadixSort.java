@@ -15,7 +15,7 @@ public class RadixSort {
 
         digits = maxDigits(p,c);
 
-        for (int div = 1; digits/div > 0; div *= 10){
+        for (int div = 1; (digits/div) > 0; div = div * 10){
             countingSort(p, div,c);
         }
 
@@ -47,9 +47,14 @@ public class RadixSort {
         List<Post> aux = new ArrayList<Post>();
         List<Integer> comptadorDig = new ArrayList<Integer>();
 
+        for (int j = 0; j < 10; j++) {
+            comptadorDig.add(0);
+        }
+        int valor;
         //Mirem quants numeros de cadam tenim entre 0 al 9
         for (int i = 0; i < p.size(); i++) {
-            comptadorDig.set((c.retornarValor(p.get(i))/divisio)%10, ((c.retornarValor(p.get(i))/divisio)%10) + 1);
+            valor = comptadorDig.get((c.retornarValor(p.get(i))/divisio)%10);
+            comptadorDig.set((c.retornarValor(p.get(i))/divisio)%10, (valor+ 1));
         }
 
         //Mtijancant un canvi necessari (sumes entre posicions anteriors i actuals) fem que el nostre array comptador apunti a les caselles
@@ -57,10 +62,14 @@ public class RadixSort {
         for (int i = 1; i < comptadorDig.size(); i++) {
             comptadorDig.set(i, comptadorDig.get(i) + comptadorDig.get(i-1));
         }
-
+        for(int j=0; j < p.size(); j++) {
+            aux.add (null);
+        }
         //Subtituim en els avalors de aux els nous valors ja ordenats per digits previament
-        for (int i = p.size() - 1; i >= 0; i++) {
-            aux.set (comptadorDig.get(i), p.get(i));
+        for (int i = (p.size() - 1); i >= 0; i--) {
+            System.out.println((c.retornarValor(p.get(i))/divisio)%10);
+            aux.set(comptadorDig.get(((c.retornarValor(p.get(i))/divisio)%10))-1, p.get(i));
+            comptadorDig.set(((c.retornarValor(p.get(i))/divisio)%10), comptadorDig.get((c.retornarValor(p.get(i))/divisio)%10)-1);
         }
 
         //Tornem a passar un array extern a un altre la informacio necessaria

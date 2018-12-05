@@ -1,6 +1,8 @@
 package Sorts;
 
 import Compare.Comparator;
+import Compare.CompareTemporalitat;
+import Compare.CompareUbicacio;
 import JSONClasses.Post;
 
 import java.util.ArrayList;
@@ -23,24 +25,27 @@ public class RadixSort {
 
     //Busquem el nombre amb mes digits per saber fins a quin digit hem d'ordenar
     private int maxDigits(List<Post> p, Comparator c){
-        Post bigNum = p.get(0);
+        Post bigNum = new Post ();
         int numAux;
 
         for (int i = 0; i < p.size(); i++){
-            if (c.compararDigits(p.get(i), bigNum)){
-                bigNum = p.get(i);
+            if (i == 0) {
+                bigNum = p.get(0);
+
+            }
+            else {
+                if (c.compararp1top2(p.get(i), bigNum)){
+                    bigNum = p.get(i);
+                }
             }
         }
 
-        //Mirem si es de temporalitat, ubicacio o prioritat
-        if (c == de temps){
-            numAux = bigNum.getPublished();
-        }else{
-            //Sino tornar de ubicacio
-            //Falta implementar de per combinacio de prioritats
-            numAux = bigNum.getPublished();
+        if (c instanceof CompareUbicacio){
+            numAux = (int) c.retornarValor(bigNum) * 10000000;
+            return numAux;
         }
 
+        numAux = (int) c.retornarValor(bigNum);
         return numAux;
     }
 

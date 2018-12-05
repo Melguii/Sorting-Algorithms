@@ -34,6 +34,21 @@ public class Menu {
                 menuOrdenacio(p,c);
                 break;
             case 2:
+                c = new CompareUbicacio();
+                float longitudRef;
+                float latitutRef;
+                System.out.println("Introdueixme una ubicacio:");
+                System.out.println("Longitud:");
+                Scanner sc = new Scanner(System.in);
+                longitudRef = sc.nextFloat();
+                System.out.println("Latitud:");
+                Scanner sc2 = new Scanner(System.in);
+                latitutRef = sc2.nextFloat();
+                //Calculem la distancia amb la formula del haversine per a cada post
+                for (Post post_aux2:p) {
+                    post_aux2.calculHaversine(longitudRef,latitutRef);
+                }
+                menuOrdenacio(p,c);
                 break;
             case 3:
                 break;

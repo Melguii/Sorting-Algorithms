@@ -2,7 +2,7 @@ package Compare;
 
 import JSONClasses.Post;
 
-public class CompareUbicacio {
+public class CompareUbicacio implements Comparator{
     /**
      * Veiem si la primera publicacio esta més lluny de la de referencia que la segona
      * @param post1 Primer post que volem comparar

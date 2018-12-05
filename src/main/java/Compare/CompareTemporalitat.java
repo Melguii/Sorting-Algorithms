@@ -1,7 +1,7 @@
 package Compare;
 
 import JSONClasses.Post;
-import javafx.geometry.Pos;
+//import javafx.geometry.Pos;
 
 
 public class CompareTemporalitat implements Comparator {

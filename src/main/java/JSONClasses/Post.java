@@ -6,7 +6,7 @@ import java.util.List;
 public class Post {
     private int          id;
     private int          published;
-    private List<Double> location;
+    private List<Float> location;
     private String       category;
     private List<String> liked_by;
     private List<String> commented_by;
@@ -33,7 +33,7 @@ public class Post {
      * Constructor de Post, necessari per establir a de quin tipus concret es la interficie List
      */
     public Post() {
-        this.location = new ArrayList<Double>();
+        this.location = new ArrayList<Float>();
         this.liked_by = new ArrayList<String>();
         this.commented_by = new ArrayList<String>();
         this.usersLikes = new ArrayList<User>();
@@ -76,7 +76,7 @@ public class Post {
      * Getter de Location
      * @return Valors actuals que té la l'atribut de tipus llista Location
      */
-    public List<Double> getLocation() {
+    public List<Float> getLocation() {
         return location;
     }
 
@@ -84,7 +84,7 @@ public class Post {
      * Setter de Location
      * @param location Valors que volem assignar a l'atribut tipus llista location
      */
-    public void setLocation(List<Double> location) {
+    public void setLocation(List<Float> location) {
         this.location = location;
     }
 
@@ -211,5 +211,8 @@ public class Post {
                 i++;
             }
         }
+    }
+    public void calculHaversine (float longitudRef, float latitudRef) {
+        comparacioUbicacio = (float) (2 * Math.asin(Math.sqrt(Math.pow(Math.sin((this.location.get(1) - latitudRef)/2),(float)2)+Math.cos(this.location.get(1))*Math.cos(latitudRef)*Math.pow(Math.sin((this.getLocation().get(0) - longitudRef)/2),2))));
     }
 }

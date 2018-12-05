@@ -3,6 +3,7 @@ package JSONClasses;
 import Compare.*;
 import Sorts.MergeSort;
 import Sorts.QuickSort;
+import Sorts.RadixSort;
 import Sorts.SelectionSort;
 
 import java.io.*;
@@ -94,6 +95,8 @@ public class Menu {
                 m.mergeSort(p,c,0,p.size()-1);
                 break;
             case 3:
+                RadixSort r = new RadixSort();
+                r.radixSort (p,c);
                 break;
             case 4:
                 SelectionSort s = new SelectionSort();

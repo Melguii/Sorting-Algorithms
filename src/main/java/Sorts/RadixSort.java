@@ -16,7 +16,7 @@ public class RadixSort {
         digits = maxDigits(p,c);
 
         for (int div = 1; digits/div > 0; div *= 10){
-            countingSort(p, div);
+            countingSort(p, div,c);
         }
 
         return p;
@@ -39,41 +39,35 @@ public class RadixSort {
                 }
             }
         }
-
-        if (c instanceof CompareUbicacio){
-            numAux = (int) c.retornarValor(bigNum) * 10000000;
-            return numAux;
-        }
-
-        numAux = (int) c.retornarValor(bigNum);
+        numAux = c.retornarValor(bigNum);
         return numAux;
     }
 
-    private List<Post> countingSort(List<Post> p, int div) {
+    private List<Post> countingSort(List<Post> p, int divisio, Comparator c) {
         List<Post> aux = new ArrayList<Post>();
-        List<Post> comptadorDig = new ArrayList<Post>();
+        List<Integer> comptadorDig = new ArrayList<Integer>();
 
         //Mirem quants numeros de cadam tenim entre 0 al 9
         for (int i = 0; i < p.size(); i++) {
-            comptadorDig[(p.get(i)/div)%10]++;
+            comptadorDig.set((c.retornarValor(p.get(i))/divisio)%10, ((c.retornarValor(p.get(i))/divisio)%10) + 1);
         }
 
         //Mtijancant un canvi necessari (sumes entre posicions anteriors i actuals) fem que el nostre array comptador apunti a les caselles
         //que li pertoquen de l'array aux
-        for (int i = 1; i < 19; i++) {
-            comptadorDig[i] += comptadorDig[i - 1];
+        for (int i = 1; i < comptadorDig.size(); i++) {
+            comptadorDig.set(i, comptadorDig.get(i) + comptadorDig.get(i-1));
         }
 
         //Subtituim en els avalors de aux els nous valors ja ordenats per digits previament
         for (int i = p.size() - 1; i >= 0; i++) {
-            aux
-            comptadorDig
+            aux.set (comptadorDig.get(i), p.get(i));
         }
 
         //Tornem a passar un array extern a un altre la informacio necessaria
         for (int i = 0; i < p.size(); i++) {
             p.set(i, aux.get(i));
         }
+        return p;
     }
 
 }

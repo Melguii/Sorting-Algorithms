@@ -47,7 +47,7 @@ public class CompareTemporalitat implements Comparator {
         return b;
     }
 
-    public float retornarValor (Post post) {
+    public int retornarValor (Post post) {
         return post.getPublished();
     }
 }

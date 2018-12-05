@@ -6,26 +6,26 @@ import java.util.List;
 public class Post {
     private int          id;
     private int          published;
-    private List<Float> location;
+    private List<Float>  location;
     private String       category;
     private List<String> liked_by;
     private List<String> commented_by;
     private List<User>   usersLikes;                //Informacio dels users que han donat like (ho sabem gracies linkedBy)
     private List<User>   usersComments;             //Informacio dels users que han comentat (ho sabem gracies commentedBy)
-    private float        comparacioUbicacio;        //Distancia entre usuaris
+    private int          comparacioUbicacio;        //Distancia entre usuaris
 
     /**
      * Retorna la diferencia en distancia calculada en Haversine entre la ubicacio de referencia i l'ubicacio del Post
      * @return Distancia en Haversine
      */
-    public float getComparacioUbicacio() {
+    public int getComparacioUbicacio() {
         return comparacioUbicacio;
     }
     /**
      * Estableix la diferencia en distancia calculada en Haversine
      * @return Distancia en Haversine
      */
-    public void setComparacioUbicacio(float comparacioUbicacio) {
+    public void setComparacioUbicacio(int comparacioUbicacio) {
         this.comparacioUbicacio = comparacioUbicacio;
     }
 
@@ -212,7 +212,8 @@ public class Post {
             }
         }
     }
+
     public void calculHaversine (float longitudRef, float latitudRef) {
-        comparacioUbicacio = (float) (2 * Math.asin(Math.sqrt(Math.pow(Math.sin((this.location.get(1) - latitudRef)/2),(float)2)+Math.cos(this.location.get(1))*Math.cos(latitudRef)*Math.pow(Math.sin((this.getLocation().get(0) - longitudRef)/2),2))));
+        comparacioUbicacio = (int) (100000 *(2 * Math.asin(Math.sqrt(Math.pow(Math.sin((this.location.get(1) - latitudRef)/2),(float)2)+Math.cos(this.location.get(1))*Math.cos(latitudRef)*Math.pow(Math.sin((this.getLocation().get(0) - longitudRef)/2),2)))));
     }
 }

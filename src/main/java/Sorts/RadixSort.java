@@ -11,7 +11,7 @@ import java.util.List;
 public class RadixSort {
 
     public List<Post> radixSort(List<Post> p, Comparator c) {
-        int digits;
+        long digits;
 
         digits = maxDigits(p,c);
 
@@ -24,9 +24,9 @@ public class RadixSort {
     }
 
     //Busquem el nombre amb mes digits per saber fins a quin digit hem d'ordenar
-    private int maxDigits(List<Post> p, Comparator c){
+    private long maxDigits(List<Post> p, Comparator c){
         Post bigNum = new Post ();
-        int numAux;
+        long numAux;
 
         for (int i = 0; i < p.size(); i++){
             if (i == 0) {
@@ -53,8 +53,8 @@ public class RadixSort {
         int valor;
         //Mirem quants numeros de cadam tenim entre 0 al 9
         for (int i = 0; i < p.size(); i++) {
-            valor = comptadorDig.get((c.retornarValor(p.get(i))/divisio)%10);
-            comptadorDig.set((c.retornarValor(p.get(i))/divisio)%10, (valor+ 1));
+            valor = comptadorDig.get((int)((c.retornarValor(p.get(i))/divisio)%10));
+            comptadorDig.set((int)((c.retornarValor(p.get(i))/divisio)%10), (valor+ 1));
         }
 
         //Mtijancant un canvi necessari (sumes entre posicions anteriors i actuals) fem que el nostre array comptador apunti a les caselles
@@ -68,8 +68,8 @@ public class RadixSort {
         //Subtituim en els avalors de aux els nous valors ja ordenats per digits previament
         for (int i = (p.size() - 1); i >= 0; i--) {
             System.out.println((c.retornarValor(p.get(i))/divisio)%10);
-            aux.set(comptadorDig.get(((c.retornarValor(p.get(i))/divisio)%10))-1, p.get(i));
-            comptadorDig.set(((c.retornarValor(p.get(i))/divisio)%10), comptadorDig.get((c.retornarValor(p.get(i))/divisio)%10)-1);
+            aux.set(comptadorDig.get((int)((c.retornarValor(p.get(i))/divisio)%10))-1, p.get(i));
+            comptadorDig.set((int)((c.retornarValor(p.get(i))/divisio)%10), comptadorDig.get((int)((c.retornarValor(p.get(i))/divisio)%10))-1);
         }
 
         //Tornem a passar un array extern a un altre la informacio necessaria

@@ -2,7 +2,7 @@ package JSONClasses;
 
 public class Connection {
     private String  username;
-    private int     since;
+    private long     since;
     private int     visits;
     private int     likes;
     private int     comments;
@@ -15,11 +15,11 @@ public class Connection {
         this.username = username;
     }
 
-    public int getSince() {
+    public long getSince() {
         return since;
     }
 
-    public void setSince(int since) {
+    public void setSince(long since) {
         this.since = since;
     }
 

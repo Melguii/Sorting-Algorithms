@@ -5,27 +5,27 @@ import java.util.List;
 
 public class Post {
     private int          id;
-    private int          published;
+    private long         published;
     private List<Float>  location;
     private String       category;
     private List<String> liked_by;
     private List<String> commented_by;
     private List<User>   usersLikes;                //Informacio dels users que han donat like (ho sabem gracies linkedBy)
     private List<User>   usersComments;             //Informacio dels users que han comentat (ho sabem gracies commentedBy)
-    private int          comparacioUbicacio;        //Distancia entre usuaris
+    private long          comparacioUbicacio;        //Distancia entre usuaris
 
     /**
      * Retorna la diferencia en distancia calculada en Haversine entre la ubicacio de referencia i l'ubicacio del Post
      * @return Distancia en Haversine
      */
-    public int getComparacioUbicacio() {
+    public long getComparacioUbicacio() {
         return comparacioUbicacio;
     }
     /**
      * Estableix la diferencia en distancia calculada en Haversine
      * @return Distancia en Haversine
      */
-    public void setComparacioUbicacio(int comparacioUbicacio) {
+    public void setComparacioUbicacio(long comparacioUbicacio) {
         this.comparacioUbicacio = comparacioUbicacio;
     }
 
@@ -60,7 +60,7 @@ public class Post {
      * Getter de Published
      * @return Valor actual de published
      */
-    public int getPublished() {
+    public long getPublished() {
         return published;
     }
 
@@ -68,7 +68,7 @@ public class Post {
      * Setter de Published
      * @param published Valor que establim a Published
      */
-    public void setPublished(int published) {
+    public void setPublished(long published) {
         this.published = published;
     }
 

@@ -11,8 +11,8 @@ public class CompareUbicacio implements Comparator{
      */
     public boolean compararp1top2 (Post post1, Post post2) {
         boolean b = false;
-        int resultat1 = post1.getComparacioUbicacio();
-        int resultat2 = post2.getComparacioUbicacio();
+        long resultat1 = post1.getComparacioUbicacio();
+        long resultat2 = post2.getComparacioUbicacio();
         if (resultat1 > resultat2) {
             b = true;
         }
@@ -26,8 +26,8 @@ public class CompareUbicacio implements Comparator{
      * @return Si p1.distanciatoReference < p2.distanciatoReference
      */
     public boolean compararp2top1 (Post post1, Post post2) {
-        int resultat1 = post1.getComparacioUbicacio();
-        int resultat2 = post2.getComparacioUbicacio();
+        long resultat1 = post1.getComparacioUbicacio();
+        long resultat2 = post2.getComparacioUbicacio();
         boolean b = false;
         if (resultat1 < resultat2) {
             b = true;
@@ -42,8 +42,8 @@ public class CompareUbicacio implements Comparator{
      * @return Si p1.distanciatoReference <= p2.distanciatoReference
      */
     public boolean compararp2top1IncludeEqual (Post post1, Post post2) {
-        int resultat1 = post1.getComparacioUbicacio();
-        int resultat2 = post2.getComparacioUbicacio();
+        long resultat1 = post1.getComparacioUbicacio();
+        long resultat2 = post2.getComparacioUbicacio();
         boolean b = false;
         if (resultat1 <= resultat2) {
             b = true;
@@ -52,7 +52,7 @@ public class CompareUbicacio implements Comparator{
     }
 
 
-    public int retornarValor (Post post) {
+    public long retornarValor (Post post) {
         return post.getComparacioUbicacio();
     }
 }

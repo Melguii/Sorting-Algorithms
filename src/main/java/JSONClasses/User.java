@@ -145,25 +145,28 @@ public class User {
             }
         }
     }
-    //Calcula el percentatge de interes de l'usuari, segons la categoria del Post
+    //Calcula el percentatge de interes de l'usuari, segons la categoria del Post(basat en likes)
     public void interesCategoria (Post post) {
         List<String> p = new ArrayList <String>();
-        List <Integer> numeroLikesCat = new ArrayList <Integer>();
+        List <Integer> numeroInteraccions = new ArrayList <Integer>();
         float percentatge;
-        p.add(" ");
-        numeroLikesCat.add(0);
         for (int i = 0; i < postsAgradats.size(); i++) {
-           trobarPost (postsAgradats.get(i).getCategory(),p,numeroLikesCat,0);
+           trobarPost (postsAgradats.get(i).getCategory(),p,numeroInteraccions,0);
         }
-        for (int w=1 ; w < numeroLikesCat.size();w++){
-            percentatge = ((float)numeroLikesCat.get(w)/(likedPosts.size())) * 100;
+        for (int i = 0; i < postsComentats.size();i++) {
+            trobarPost (postsComentats.get(i).getCategory(),p,numeroInteraccions,0);
+        }
+        for (int i = 0; i < posts.size();i++) {
+            trobarPost (posts.get(i).getCategory(),p,numeroInteraccions,0);
+        }
+        for (int w=0 ; w < p.size();w++){
+            percentatge = ((float)numeroInteraccions.get(w)/(likedPosts.size() + commentedPosts.size() + posts.size())) * 100;
             System.out.println(p.get(w) + "-" + percentatge);
         }
     }
-
     private void trobarPost (String s,List <String> sRef,List <Integer> numeroLikesCat,int j) {
-        if (s.equals(sRef.get(j)) || (j == (sRef.size()-1))) {
-            if (s.equals(sRef.get(j))) {
+        if (sRef.size() == 0 || s.equals(sRef.get(j)) || (j == (sRef.size()-1))) {
+            if (sRef.size() != 0 && s.equals(sRef.get(j))) {
                 numeroLikesCat.set(j, numeroLikesCat.get(j) + 1);
             }
             else {

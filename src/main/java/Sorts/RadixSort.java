@@ -67,7 +67,6 @@ public class RadixSort {
         }
         //Subtituim en els avalors de aux els nous valors ja ordenats per digits previament
         for (int i = (p.size() - 1); i >= 0; i--) {
-            System.out.println((c.retornarValor(p.get(i))/divisio)%10);
             aux.set(comptadorDig.get((int)((c.retornarValor(p.get(i))/divisio)%10))-1, p.get(i));
             comptadorDig.set((int)((c.retornarValor(p.get(i))/divisio)%10), comptadorDig.get((int)((c.retornarValor(p.get(i))/divisio)%10))-1);
         }

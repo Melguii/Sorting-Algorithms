@@ -214,6 +214,8 @@ public class Post {
     }
 
     public void calculHaversine (float longitudRef, float latitudRef) {
-        comparacioUbicacio = (int) (100000 *(2 * Math.asin(Math.sqrt(Math.pow(Math.sin((this.location.get(1) - latitudRef)/2),(float)2)+Math.cos(this.location.get(1))*Math.cos(latitudRef)*Math.pow(Math.sin((this.getLocation().get(0) - longitudRef)/2),2)))));
+        double dlatitud = Math.toRadians(latitudRef-this.location.get(0));
+        double dlongitud = Math.toRadians(longitudRef-this.location.get(1));
+        comparacioUbicacio = (int) (100000 *(2 * Math.asin(Math.sqrt(Math.pow(Math.sin(dlatitud/2),(float)2)+Math.cos(this.location.get(0))*Math.cos(latitudRef)*Math.pow(Math.sin(dlongitud/2),2)))));
     }
 }

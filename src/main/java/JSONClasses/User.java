@@ -14,6 +14,8 @@ public class User {
     private List<Integer>       likedPosts;
     private List<Integer>       commentedPosts;
     private List<User>          link;                   //Informacio dels usuaris dels quals interacciona/segueix
+    private List <Post>         postsAgradats;
+    private List <Post>         postsComentats;
 
 
     public User() {
@@ -22,6 +24,8 @@ public class User {
         this.likedPosts = new ArrayList<Integer>();
         this.commentedPosts = new ArrayList<Integer>();
         this.link = new ArrayList<User>();
+        this.postsAgradats = new ArrayList <Post>();
+        this.postsComentats = new ArrayList <Post>();
     }
 
     public List<User> getLink() {
@@ -110,6 +114,40 @@ public class User {
                 i++;
             }
         }
+    }
+    public void referenciarPostAgradats (List <Post> p){
+        boolean b;
+        int j = 0;
+        for (int i = 0; i < likedPosts.size(); i++) {
+            b = false;
+            j = 0;
+            while (j < p.size() && b == false) {
+                if (p.get(j).getId() == likedPosts.get(i)) {
+                    b = true;
+                    postsAgradats.add(p.get(j));
+                }
+                j++;
+            }
+        }
+    }
+    public void referenciarPostComentats (List <Post> p){
+        boolean b;
+        int j = 0;
+        for (int i = 0; i < commentedPosts.size(); i++) {
+            j = 0;
+            b = false;
+            while (j < p.size() && b == false) {
+                if (p.get(j).getId() == commentedPosts.get(i)) {
+                    b = true;
+                    postsComentats.add(p.get(j));
+                }
+                j++;
+            }
+        }
+    }
+    //Calcula el percentatge de interes de l'usuari, segons la categoria del Post
+    public void interesCategoria (Post post) {
+
     }
 
 

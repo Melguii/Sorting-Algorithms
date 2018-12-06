@@ -147,8 +147,33 @@ public class User {
     }
     //Calcula el percentatge de interes de l'usuari, segons la categoria del Post
     public void interesCategoria (Post post) {
-
+        List<String> p = new ArrayList <String>();
+        List <Integer> numeroLikesCat = new ArrayList <Integer>();
+        float percentatge;
+        p.add(" ");
+        numeroLikesCat.add(0);
+        for (int i = 0; i < postsAgradats.size(); i++) {
+           trobarPost (postsAgradats.get(i).getCategory(),p,numeroLikesCat,0);
+        }
+        for (int w=1 ; w < numeroLikesCat.size();w++){
+            percentatge = ((float)numeroLikesCat.get(w)/(likedPosts.size())) * 100;
+            System.out.println(p.get(w) + "-" + percentatge);
+        }
     }
 
+    private void trobarPost (String s,List <String> sRef,List <Integer> numeroLikesCat,int j) {
+        if (s.equals(sRef.get(j)) || (j == (sRef.size()-1))) {
+            if (s.equals(sRef.get(j))) {
+                numeroLikesCat.set(j, numeroLikesCat.get(j) + 1);
+            }
+            else {
+                sRef.add(s);
+                numeroLikesCat.add(1);
+            }
+        }
+        else {
+            trobarPost(s,sRef,numeroLikesCat,j+1);
+        }
+    }
 
 }

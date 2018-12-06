@@ -52,6 +52,7 @@ public class Menu {
                 menuOrdenacio(p,c);
                 break;
             case 3:
+                users[0].interesCategoria(users[0].getPosts().get(0));
                 break;
             case 4:
                 break;

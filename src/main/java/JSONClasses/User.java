@@ -1,6 +1,9 @@
 package JSONClasses;
 
+import Compare.Comparator;
+import Compare.CompareTemporalitat;
 import JSONClasses.Connection;
+import Sorts.QuickSort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,9 @@ public class User {
     private List <Post>         postsAgradats;
     private List <Post>         postsComentats;
 
-
+    /**
+     * Constructor per a User, això el que ens permet establir que les List especificades seran ArrayList
+     */
     public User() {
         this.connections = new ArrayList<Connection>();
         this.posts = new ArrayList<Post>();
@@ -178,5 +183,67 @@ public class User {
             trobarPost(s,sRef,numeroLikesCat,j+1);
         }
     }
-
+    public void interesUsuari (User user) {
+        List <Integer> valorInteres = new ArrayList<Integer>();
+        int valorvisites;
+        int valorlikes;
+        int valorcomments;
+        int valortotal;
+        for (int i = 0; i < connections.size(); i++) {
+            valorvisites = calculValorVisits (connections.get(i).getVisits());
+            valorlikes = connections.get(i).getLikes();
+            valorcomments = connections.get(i).getComments();
+            valortotal = valorvisites + valorlikes + valorcomments;
+            System.out.println(connections.get(i).getUsername() + " - " + valortotal);
+        }
+    }
+    private int calculValorVisits (int visites) {
+        int valor;
+        if (visites < 8) {
+            valor = 1;
+        }
+        else {
+            if (visites < 20) {
+                valor = 5;
+            }
+            else {
+                if (visites < 35) {
+                    valor = 10;
+                }
+                else {
+                    if (visites < 50) {
+                        valor = 20;
+                    }
+                    else {
+                        if (visites < 75) {
+                            valor = 30;
+                        }
+                        else {
+                            if (visites < 150) {
+                                valor = 50;
+                            }
+                            else {
+                                valor = 60;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return valor;
+    }
+    public void calculTemps () {
+        List <Post> postsUsuari = new ArrayList <Post>();
+        for (int i = 0; i < link.size(); i++) {
+            for (int j=0; j < link.get(i).getPosts().size();j++) {
+                postsUsuari.add(link.get(i).getPosts().get(j));
+            }
+        }
+        //QuickSort q = new QuickSort ();
+        //Comparator c = new CompareTemporalitat();
+        //q.quickSort(postsUsuari,c,0,postsUsuari.size()-1);
+        //for(Post p:postsUsuari) {
+        //    System.out.println(p.getId());
+        //}
+    }
 }

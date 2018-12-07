@@ -1,7 +1,6 @@
 package JSONClasses;
 
-import Compare.Comparator;
-import Compare.CompareTemporalitat;
+import Compare.*;
 import JSONClasses.Connection;
 import Sorts.QuickSort;
 
@@ -151,7 +150,7 @@ public class User {
         }
     }
     //Calcula el percentatge de interes de l'usuari, segons la categoria del Post(basat en likes)
-    public void interesCategoria (Post post) {
+    private void interesCategoria () {
         List<String> p = new ArrayList <String>();
         List <Integer> numeroInteraccions = new ArrayList <Integer>();
         float percentatge;
@@ -183,7 +182,7 @@ public class User {
             trobarPost(s,sRef,numeroLikesCat,j+1);
         }
     }
-    public void interesUsuari (User user) {
+    private void interesUsuari () {
         List <Integer> valorInteres = new ArrayList<Integer>();
         int valorvisites;
         int valorlikes;
@@ -232,18 +231,106 @@ public class User {
         }
         return valor;
     }
-    public void calculTemps () {
+    private void calculTemporalitat () {
         List <Post> postsUsuari = new ArrayList <Post>();
+        long maximTemps;
         for (int i = 0; i < link.size(); i++) {
             for (int j=0; j < link.get(i).getPosts().size();j++) {
                 postsUsuari.add(link.get(i).getPosts().get(j));
             }
         }
-        //QuickSort q = new QuickSort ();
-        //Comparator c = new CompareTemporalitat();
-        //q.quickSort(postsUsuari,c,0,postsUsuari.size()-1);
-        //for(Post p:postsUsuari) {
-        //    System.out.println(p.getId());
-        //}
+        maximTemps = buscarMaxim (postsUsuari,0,0);
+        calculValorTemps(postsUsuari, maximTemps);
+    }
+    private long buscarMaxim (List <Post> postsUsuari,int i, long max) {
+        if (i == postsUsuari.size()) {
+            return max;
+        }
+        else {
+            if (postsUsuari.get(i).getPublished() > max) {
+                max = postsUsuari.get(i).getPublished();
+            }
+            max = buscarMaxim(postsUsuari,i + 1, max);
+            return max;
+        }
+    }
+    private void calculValorTemps (List <Post> postsUsuari, long maximTemps) {
+        List <Float> valorsTemps = new ArrayList<Float>();
+        CompareTimeStamps c;
+        if ((postsUsuari.get(0).getPublished() - 10000000000l) > 0) {
+            c = new CompareMiliseconds();
+        }
+        else {
+            c = new CompareSeconds();
+        }
+        for (Post p : postsUsuari) {
+            valorsTemps.add(assignarValor(p.getPublished(), maximTemps,c));
+            if (assignarValor(p.getPublished(), maximTemps,c) > 0.8) {
+                System.out.println(assignarValor(p.getPublished(), maximTemps, c));
+            }
+        }
+    }
+    private float assignarValor (long tempsAct, long maxim, CompareTimeStamps c) {
+        float valor;
+        //0h a 6h
+        if (c.compareTimestamps(tempsAct,maxim,21600)) {
+            valor = 1;
+        }
+        else{
+            if (c.compareTimestamps(tempsAct,maxim,43200)) {
+                valor = 0.95f;
+            }
+            else {
+                if (c.compareTimestamps(tempsAct,maxim,86400)) {
+                    valor = 0.9f;
+                }
+                else {
+                    if (c.compareTimestamps(tempsAct,maxim,259200)) {
+                        valor = 0.8f;
+                    }
+                    else {
+                        if (c.compareTimestamps(tempsAct,maxim,604800)) {
+                            valor = 0.7f;
+                        }
+                        else {
+                            if (c.compareTimestamps(tempsAct,maxim,1209600)) {
+                                valor = 0.5f;
+                            }
+                            else {
+                                if (c.compareTimestamps(tempsAct,maxim,2419200)) {
+                                    valor = 0.3f;
+                                }
+                                else {
+                                    //Entre 4 i 8 semanes
+                                    if (c.compareTimestamps(tempsAct,maxim,4838400)) {
+                                        valor = 0.2f;
+                                    }
+                                    else {
+                                        if (c.compareTimestamps(tempsAct,maxim,14515200)) {
+                                            valor = 0.1f;
+                                        }
+                                        else {
+                                            valor = 0.05f;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return valor;
+    }
+    private void indexarUsuaris(List <User> users, List<Integer> interesUsuaris) {
+        for (User u:users) {
+
+        }
+    }
+    private void calculPrioritats () {
+        interesUsuari (); //Com obtenim els arrays resultatnts;
+        calculTemporalitat ();
+        interesCategoria ();
+        indexarUsuaris (link, interesUsuaris);
     }
 }

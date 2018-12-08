@@ -150,9 +150,10 @@ public class User {
         }
     }
     //Calcula el percentatge de interes de l'usuari, segons la categoria del Post(basat en likes)
-    private void interesCategoria () {
-        List<String> p = new ArrayList <String>();
+    private List <Float> interesCategoria (List <String> p) {
+        p = new ArrayList <String>();
         List <Integer> numeroInteraccions = new ArrayList <Integer>();
+        List <Float> percentatgesCategories = new ArrayList<Float>();
         float percentatge;
         for (int i = 0; i < postsAgradats.size(); i++) {
            trobarPost (postsAgradats.get(i).getCategory(),p,numeroInteraccions,0);
@@ -165,8 +166,9 @@ public class User {
         }
         for (int w=0 ; w < p.size();w++){
             percentatge = ((float)numeroInteraccions.get(w)/(likedPosts.size() + commentedPosts.size() + posts.size())) * 100;
-            System.out.println(p.get(w) + "-" + percentatge);
+            percentatgesCategories.add(percentatge);
         }
+        return percentatgesCategories;
     }
     private void trobarPost (String s,List <String> sRef,List <Integer> numeroLikesCat,int j) {
         if (sRef.size() == 0 || s.equals(sRef.get(j)) || (j == (sRef.size()-1))) {
@@ -182,19 +184,22 @@ public class User {
             trobarPost(s,sRef,numeroLikesCat,j+1);
         }
     }
-    private void interesUsuari () {
-        List <Integer> valorInteres = new ArrayList<Integer>();
-        int valorvisites;
-        int valorlikes;
-        int valorcomments;
-        int valortotal;
+    private List <Float> interesUsuari (List<String> nomsUsuaris) {
+        List <Float> valorInteres = new ArrayList<Float>();
+        nomsUsuaris = new ArrayList <String>();
+        int valorVisites;
+        int valorLikes;
+        int valorComments;
+        float valorTotal;
         for (int i = 0; i < connections.size(); i++) {
-            valorvisites = calculValorVisits (connections.get(i).getVisits());
-            valorlikes = connections.get(i).getLikes();
-            valorcomments = connections.get(i).getComments();
-            valortotal = valorvisites + valorlikes + valorcomments;
-            System.out.println(connections.get(i).getUsername() + " - " + valortotal);
+            valorVisites = calculValorVisits (connections.get(i).getVisits());
+            valorLikes = connections.get(i).getLikes();
+            valorComments = connections.get(i).getComments();
+            valorTotal = valorVisites + valorLikes + valorComments;
+            nomsUsuaris.add(connections.get(i).getUsername());
+            valorInteres.add(valorTotal);
         }
+        return valorInteres;
     }
     private int calculValorVisits (int visites) {
         int valor;
@@ -231,8 +236,9 @@ public class User {
         }
         return valor;
     }
-    private void calculTemporalitat () {
-        List <Post> postsUsuari = new ArrayList <Post>();
+    private List <Float> calculTemporalitat (List <Post> postsUsuari) {
+        postsUsuari = new ArrayList <Post>();
+        List <Float> valorsTemps = new ArrayList <Float>();
         long maximTemps;
         for (int i = 0; i < link.size(); i++) {
             for (int j=0; j < link.get(i).getPosts().size();j++) {
@@ -240,7 +246,8 @@ public class User {
             }
         }
         maximTemps = buscarMaxim (postsUsuari,0,0);
-        calculValorTemps(postsUsuari, maximTemps);
+        valorsTemps = calculValorTemps(postsUsuari, maximTemps);
+        return valorsTemps;
     }
     private long buscarMaxim (List <Post> postsUsuari,int i, long max) {
         if (i == postsUsuari.size()) {
@@ -254,7 +261,7 @@ public class User {
             return max;
         }
     }
-    private void calculValorTemps (List <Post> postsUsuari, long maximTemps) {
+    private List <Float> calculValorTemps (List <Post> postsUsuari, long maximTemps) {
         List <Float> valorsTemps = new ArrayList<Float>();
         CompareTimeStamps c;
         if ((postsUsuari.get(0).getPublished() - 10000000000l) > 0) {
@@ -265,10 +272,8 @@ public class User {
         }
         for (Post p : postsUsuari) {
             valorsTemps.add(assignarValor(p.getPublished(), maximTemps,c));
-            if (assignarValor(p.getPublished(), maximTemps,c) > 0.8) {
-                System.out.println(assignarValor(p.getPublished(), maximTemps, c));
-            }
         }
+        return valorsTemps;
     }
     private float assignarValor (long tempsAct, long maxim, CompareTimeStamps c) {
         float valor;
@@ -322,15 +327,61 @@ public class User {
         }
         return valor;
     }
-    private void indexarUsuaris(List <User> users, List<Integer> interesUsuaris) {
-        for (User u:users) {
-
+    private float [] indexarHash(List <String> strings, List<Float> interes) {
+        int i;
+        float [] hashMap = new float [strings.size()];
+        for (int j= 0; j < strings.size(); j++) {
+            int valor = 0;
+            i = 0;
+            for (i = 2;i < strings.get(j).length();i = i+3) {
+                valor = valor + (strings.get(j).charAt(i-2) + strings.get(j).charAt(i-1)) * strings.get(j).charAt(i);
+            }
+            if (i != (strings.get(j).length() - 1)) {
+                if (i == strings.get(j).length() - 2) {
+                    valor = valor + strings.get(j).charAt(i+1);
+                }
+                else {
+                    valor = valor + strings.get(j).charAt(i+1) + strings.get(j).charAt(i+2);
+                }
+            }
+            valor = valor % strings.size();
+            if (hashMap[valor] == 0) {
+                hashMap[valor] = interes.get(j);
+            }
+            else {
+                int posicioLliure = j;
+                while (hashMap[posicioLliure]!= 0){
+                    posicioLliure++;
+                    if (posicioLliure == strings.size()) {
+                        posicioLliure = 0;
+                    }
+                }
+                hashMap[valor] = interes.get(j);
+            }
         }
     }
     private void calculPrioritats () {
-        interesUsuari (); //Com obtenim els arrays resultatnts;
-        calculTemporalitat ();
-        interesCategoria ();
-        indexarUsuaris (link, interesUsuaris);
+        List <Float> interesUsuaris = new ArrayList <Float>;
+        List <String> usernamesFollows;
+        List <Post> postsFollows;
+        List <Float> valorTemporalitat;
+        List <Float> percentatgeCategories;
+        List <String> nomsCategories;
+
+        interesUsuaris = interesUsuari (usernamesFollows); //Com obtenim els arrays resultatnts;
+        valorTemporalitat = calculTemporalitat (postsFollows);
+        percentatgeCategories=interesCategoria (nomsCategories);
+
+        float [] hashCategories;
+        float [] hashInteresUsuaris;
+
+        hashCategories = indexarHash(nomsCategories, percentatgeCategories);
+        hashInteresUsuaris = indexarHash(usernamesFollows,interesUsuaris);
+        //Busqueda de Hash
+        //FORMULA
+        //EXTERNES DE LA FUNCIO: ARREGLAR EL COST DEL PRINCIPI
+        //while (Post p:postsSeguits) {
+        //    p.s
+        //}
     }
 }

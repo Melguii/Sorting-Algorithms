@@ -7,7 +7,12 @@ import java.util.List;
 
 public class SelectionSort {
 
-    //Return p
+    /**
+     *
+     * @param p
+     * @param c
+     * @return
+     */
     public List<Post> selectionSort(List<Post> p, Comparator c) {
         int smallNum;
         Post tmp;

@@ -51,7 +51,11 @@ public class CompareUbicacio implements Comparator{
         return b;
     }
 
-
+    /**
+     *
+     * @param post
+     * @return
+     */
     public long retornarValor (Post post) {
         return post.getComparacioUbicacio();
     }

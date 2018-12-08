@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MergeSort {
+    /**
+     *
+     * @param p
+     * @param c
+     * @param i
+     * @param j
+     * @return
+     */
     public List<Post> mergeSort (List<Post> p, Comparator c, int i, int j) {
         int mig;
         if (i >= j) {
@@ -21,6 +29,16 @@ public class MergeSort {
         }
         return p;
     }
+
+    /**
+     *
+     * @param p
+     * @param i
+     * @param mig
+     * @param j
+     * @param c
+     * @return
+     */
     private List<Post> merge (List<Post> p ,int i, int mig, int j, Comparator c) {
         List<Post> b = new ArrayList<Post>();
         int k1;

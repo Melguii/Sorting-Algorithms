@@ -10,6 +10,12 @@ import java.util.List;
 
 public class RadixSort {
 
+    /**
+     *
+     * @param p
+     * @param c
+     * @return
+     */
     public List<Post> radixSort(List<Post> p, Comparator c) {
         long digits;
 
@@ -23,7 +29,12 @@ public class RadixSort {
 
     }
 
-    //Busquem el nombre amb mes digits per saber fins a quin digit hem d'ordenar
+    /**
+     * Busquem el nombre amb mes digits per saber fins a quin digit hem d'ordenar
+     * @param p
+     * @param c
+     * @return
+     */
     private long maxDigits(List<Post> p, Comparator c){
         Post bigNum = new Post ();
         long numAux;
@@ -44,6 +55,13 @@ public class RadixSort {
         return numAux;
     }
 
+    /**
+     *
+      * @param p
+     * @param divisio
+     * @param c
+     * @return
+     */
     private List<Post> countingSort(List<Post> p, int divisio, Comparator c) {
         List<Post> aux = new ArrayList<Post>();
         List<Integer> comptadorDig = new ArrayList<Integer>();

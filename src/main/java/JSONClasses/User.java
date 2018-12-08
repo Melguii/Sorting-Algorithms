@@ -120,6 +120,11 @@ public class User {
             }
         }
     }
+
+    /**
+     *
+     * @param p
+     */
     public void referenciarPostAgradats (List <Post> p){
         boolean b;
         int j = 0;
@@ -135,6 +140,11 @@ public class User {
             }
         }
     }
+
+    /**
+     *
+     * @param p
+     */
     public void referenciarPostComentats (List <Post> p){
         boolean b;
         int j = 0;
@@ -150,6 +160,12 @@ public class User {
             }
         }
     }
+
+    /**
+     *
+     * @param p
+     * @return
+     */
     //Calcula el percentatge de interes de l'usuari, segons la categoria del Post(basat en likes)
     private List <Float> interesCategoria (List <String> p) {
         List <Integer> numeroInteraccions = new ArrayList <Integer>();
@@ -170,6 +186,14 @@ public class User {
         }
         return percentatgesCategories;
     }
+
+    /**
+     *
+     * @param s
+     * @param sRef
+     * @param numeroLikesCat
+     * @param j
+     */
     private void trobarPost (String s,List <String> sRef,List <Integer> numeroLikesCat,int j) {
         if (sRef.size() == 0 || s.equals(sRef.get(j)) || (j == (sRef.size()-1))) {
             if (sRef.size() != 0 && s.equals(sRef.get(j))) {
@@ -184,6 +208,12 @@ public class User {
             trobarPost(s,sRef,numeroLikesCat,j+1);
         }
     }
+
+    /**
+     *
+     * @param nomsUsuaris
+     * @return
+     */
     private List <Float> interesUsuari (List<String> nomsUsuaris) {
         List <Float> valorInteres = new ArrayList<Float>();
         int valorVisites;
@@ -200,6 +230,12 @@ public class User {
         }
         return valorInteres;
     }
+
+    /**
+     *
+     * @param visites
+     * @return
+     */
     private int calculValorVisits (int visites) {
         int valor;
         if (visites < 8) {
@@ -235,6 +271,13 @@ public class User {
         }
         return valor;
     }
+
+    /**
+     *
+     * @param postsUsuari
+     * @param propietarisPost
+     * @return
+     */
     private List <Float> calculTemporalitat (List <Post> postsUsuari, List <String> propietarisPost) {
         List <Float> valorsTemps = new ArrayList <Float>();
         long maximTemps;
@@ -248,6 +291,14 @@ public class User {
         valorsTemps = calculValorTemps(postsUsuari, maximTemps);
         return valorsTemps;
     }
+
+    /**
+     *
+     * @param postsUsuari
+     * @param i
+     * @param max
+     * @return
+     */
     private long buscarMaxim (List <Post> postsUsuari,int i, long max) {
         if (i == postsUsuari.size()) {
             return max;
@@ -260,6 +311,13 @@ public class User {
             return max;
         }
     }
+
+    /**
+     *
+     * @param postsUsuari
+     * @param maximTemps
+     * @return
+     */
     private List <Float> calculValorTemps (List <Post> postsUsuari, long maximTemps) {
         List <Float> valorsTemps = new ArrayList<Float>();
         CompareTimeStamps c;
@@ -274,6 +332,14 @@ public class User {
         }
         return valorsTemps;
     }
+
+    /**
+     *
+     * @param tempsAct
+     * @param maxim
+     * @param c
+     * @return
+     */
     private float assignarValor (long tempsAct, long maxim, CompareTimeStamps c) {
         float valor;
         //0h a 6h
@@ -326,6 +392,10 @@ public class User {
         }
         return valor;
     }
+
+    /**
+     *
+     */
     public void calculPrioritats () {
         List <Float> interesUsuaris;
         List <String> usernamesFollows = new ArrayList<String>();

@@ -14,6 +14,10 @@ import java.util.Scanner;
 public class Menu {
     private int opcio;
 
+    /**
+     *
+     * @param users
+     */
     public void implementacioMenu (User [] users) {
         do {
             mostrarMenu();
@@ -21,6 +25,10 @@ public class Menu {
         } while (opcio != 4);
     }
 
+    /**
+     *
+     * @param users
+     */
     private void seleccioMenu (User[] users) {
         Comparator c;
         List<Post> p = new ArrayList<Post>();
@@ -62,6 +70,9 @@ public class Menu {
         }
     }
 
+    /**
+     *
+     */
     private void mostrarMenu () {
         System.out.println("Benvingut a InstaSalle, el intragram per programadors de veritat");
         System.out.println("\t1.Ordenar segons Temporalitat");
@@ -71,11 +82,21 @@ public class Menu {
         opcio = demanarOpcio();
     }
 
+    /**
+     *
+     * @return
+     */
     private int demanarOpcio () {
         System.out.println("Introdueix opcio: ");
         Scanner sc = new Scanner (System.in);
         return sc.nextInt();
     }
+
+    /**
+     *
+     * @param p
+     * @param c
+     */
     private void menuOrdenacio(List<Post>p, Comparator c) {
         int opcio_ordenacio;
         do {
@@ -85,6 +106,12 @@ public class Menu {
         } while(opcio_ordenacio < 1 || opcio_ordenacio > 4);
     }
 
+    /**
+     *
+     * @param p
+     * @param c
+     * @param opcio_ordenacio
+     */
     private void seleccioOrdenacio (List<Post>p, Comparator c, int opcio_ordenacio) {
         switch (opcio_ordenacio) {
             case 1:
@@ -117,6 +144,10 @@ public class Menu {
         }
 
     }
+
+    /**
+     *
+     */
     private void mostrarMenuOrdenacio () {
         System.out.println("De quina forma vols stalkejar?:");
         System.out.println("1.Fent un QuickSort, corre como el viento perdigon");
@@ -125,6 +156,10 @@ public class Menu {
         System.out.println("4.Fent un SelectionSort, m'agraden les tortugues");
     }
 
+    /**
+     *
+     * @return
+     */
     public FileReader menuFitxers() {
         int opcio_fitxer;
         String nom_fitxer;
@@ -136,6 +171,12 @@ public class Menu {
         } while(fitxer == null && opcio_fitxer != 5);
         return fitxer;
     }
+
+    /**
+     *
+     * @param opcio_fitxer
+     * @return
+     */
     private FileReader seleccioFitxer (int opcio_fitxer) {
         FileReader fitxer = null;
         String ubicacio = new String();
@@ -171,6 +212,10 @@ public class Menu {
         }
         return fitxer;
     }
+
+    /**
+     *
+     */
     private void mostrarMenuFitxers () {
         System.out.println("Selecciona el fitxer que vols obrir");
         System.out.println("1.Fitxer xs_dataset.json");

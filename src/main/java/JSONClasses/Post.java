@@ -224,7 +224,11 @@ public class Post {
     }
 
 
-
+    /**
+     * Funcio que ens ajuda a calcular la distancia entre dos usuaris correctament
+     * @param longitudRef Indica la longitud objectiu
+     * @param latitudRef Indica la latitud objectiu
+     */
     public void calculHaversine (float longitudRef, float latitudRef) {
         double dlatitud = Math.toRadians(latitudRef-this.location.get(0));
         double dlongitud = Math.toRadians(longitudRef-this.location.get(1));

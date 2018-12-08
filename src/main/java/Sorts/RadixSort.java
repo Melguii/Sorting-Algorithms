@@ -29,6 +29,7 @@ public class RadixSort {
         long numAux;
 
         for (int i = 0; i < p.size(); i++){
+            //CAMBIAR CONDICIONAL
             if (i == 0) {
                 bigNum = p.get(0);
 

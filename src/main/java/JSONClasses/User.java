@@ -1,6 +1,7 @@
 package JSONClasses;
 
 import Compare.*;
+import EstructuresDades.TaulaHash;
 import JSONClasses.Connection;
 import Sorts.QuickSort;
 
@@ -151,7 +152,6 @@ public class User {
     }
     //Calcula el percentatge de interes de l'usuari, segons la categoria del Post(basat en likes)
     private List <Float> interesCategoria (List <String> p) {
-        p = new ArrayList <String>();
         List <Integer> numeroInteraccions = new ArrayList <Integer>();
         List <Float> percentatgesCategories = new ArrayList<Float>();
         float percentatge;
@@ -186,7 +186,6 @@ public class User {
     }
     private List <Float> interesUsuari (List<String> nomsUsuaris) {
         List <Float> valorInteres = new ArrayList<Float>();
-        nomsUsuaris = new ArrayList <String>();
         int valorVisites;
         int valorLikes;
         int valorComments;
@@ -236,13 +235,13 @@ public class User {
         }
         return valor;
     }
-    private List <Float> calculTemporalitat (List <Post> postsUsuari) {
-        postsUsuari = new ArrayList <Post>();
+    private List <Float> calculTemporalitat (List <Post> postsUsuari, List <String> propietarisPost) {
         List <Float> valorsTemps = new ArrayList <Float>();
         long maximTemps;
         for (int i = 0; i < link.size(); i++) {
             for (int j=0; j < link.get(i).getPosts().size();j++) {
                 postsUsuari.add(link.get(i).getPosts().get(j));
+                propietarisPost.add(link.get(i).username);
             }
         }
         maximTemps = buscarMaxim (postsUsuari,0,0);
@@ -327,61 +326,60 @@ public class User {
         }
         return valor;
     }
-    private float [] indexarHash(List <String> strings, List<Float> interes) {
-        int i;
-        float [] hashMap = new float [strings.size()];
-        for (int j= 0; j < strings.size(); j++) {
-            int valor = 0;
-            i = 0;
-            for (i = 2;i < strings.get(j).length();i = i+3) {
-                valor = valor + (strings.get(j).charAt(i-2) + strings.get(j).charAt(i-1)) * strings.get(j).charAt(i);
-            }
-            if (i != (strings.get(j).length() - 1)) {
-                if (i == strings.get(j).length() - 2) {
-                    valor = valor + strings.get(j).charAt(i+1);
-                }
-                else {
-                    valor = valor + strings.get(j).charAt(i+1) + strings.get(j).charAt(i+2);
-                }
-            }
-            valor = valor % strings.size();
-            if (hashMap[valor] == 0) {
-                hashMap[valor] = interes.get(j);
-            }
-            else {
-                int posicioLliure = j;
-                while (hashMap[posicioLliure]!= 0){
-                    posicioLliure++;
-                    if (posicioLliure == strings.size()) {
-                        posicioLliure = 0;
-                    }
-                }
-                hashMap[valor] = interes.get(j);
-            }
-        }
-    }
-    private void calculPrioritats () {
-        List <Float> interesUsuaris = new ArrayList <Float>;
-        List <String> usernamesFollows;
-        List <Post> postsFollows;
+    public void calculPrioritats () {
+        List <Float> interesUsuaris;
+        List <String> usernamesFollows = new ArrayList<String>();
+        List <Post> postsFollows = new ArrayList<Post>();
         List <Float> valorTemporalitat;
         List <Float> percentatgeCategories;
-        List <String> nomsCategories;
+        List <String> nomsCategories = new ArrayList<String>();
+        List <String> hashNomsUsuaris = new ArrayList<String>();
+        List <String> hashNomsCategories = new ArrayList<String>();
+        List <String> propietarisPosts = new ArrayList<String>();
 
         interesUsuaris = interesUsuari (usernamesFollows); //Com obtenim els arrays resultatnts;
-        valorTemporalitat = calculTemporalitat (postsFollows);
+        valorTemporalitat = calculTemporalitat (postsFollows, propietarisPosts);
         percentatgeCategories=interesCategoria (nomsCategories);
 
         float [] hashCategories;
         float [] hashInteresUsuaris;
 
-        hashCategories = indexarHash(nomsCategories, percentatgeCategories);
-        hashInteresUsuaris = indexarHash(usernamesFollows,interesUsuaris);
-        //Busqueda de Hash
-        //FORMULA
-        //EXTERNES DE LA FUNCIO: ARREGLAR EL COST DEL PRINCIPI
-        //while (Post p:postsSeguits) {
-        //    p.s
-        //}
+        TaulaHash h = new TaulaHash();
+        hashCategories = h.indexarHash(nomsCategories, percentatgeCategories,hashNomsCategories);
+        hashInteresUsuaris = h.indexarHash(usernamesFollows,interesUsuaris,hashNomsUsuaris);
+
+        float percentatgeCat;
+        float interesEnUsuari;
+        float valorTemp;
+        long valorPrioritat;
+        for (int w = 0; w < postsFollows.size();w++) {
+            int index;
+            index = h.hash(postsFollows.get(w).getCategory(),hashNomsCategories);
+            if (index >= 0) {
+                percentatgeCat = hashCategories[index];
+            }
+            else {
+                percentatgeCat = 0;
+            }
+            index = h.hash(propietarisPosts.get(w),hashNomsUsuaris);
+            if (index >= 0) {
+                interesEnUsuari = hashInteresUsuaris [index];
+            }
+            else {
+                interesEnUsuari = 1f;
+            }
+            valorTemp = valorTemporalitat.get(w);
+            System.out.println("HOLA:" + interesEnUsuari);
+            System.out.println("HOLA2:" + percentatgeCat);
+            System.out.println("HOLA3:" + valorTemp);
+            valorPrioritat = (long) (10000 * Math.pow(interesEnUsuari * (Math.pow(10,percentatgeCat) / 10), valorTemp));
+            postsFollows.get(w).setValorPrioritat(valorPrioritat);
+        }
+        Comparator c = new ComparePrioritats();
+        QuickSort q = new QuickSort();
+        q.quickSort(postsFollows,c,0,postsFollows.size()-1);
+        for (int i=0; i < postsFollows.size();i++) {
+            System.out.println(postsFollows.get(i).getId() + "  " + postsFollows.get(i).getCategory() + " " + postsFollows.get(i).getValorPrioritat());
+        }
     }
 }

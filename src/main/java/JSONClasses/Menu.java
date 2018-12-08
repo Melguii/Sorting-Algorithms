@@ -52,7 +52,7 @@ public class Menu {
                 menuOrdenacio(p,c);
                 break;
             case 3:
-                users[0].calculTemps();
+                users[0].calculPrioritats();
                 break;
             case 4:
                 break;

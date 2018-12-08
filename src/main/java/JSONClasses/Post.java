@@ -13,6 +13,8 @@ public class Post {
     private List<User>   usersLikes;                //Informacio dels users que han donat like (ho sabem gracies linkedBy)
     private List<User>   usersComments;             //Informacio dels users que han comentat (ho sabem gracies commentedBy)
     private long         comparacioUbicacio;        //Distancia entre usuaris
+    private long        valorPrioritat;
+
 
     /**
      * Retorna la diferencia en distancia calculada en Haversine entre la ubicacio de referencia i l'ubicacio del Post
@@ -167,6 +169,15 @@ public class Post {
     public void setUsersComments(List<User> usersComments) {
         this.usersComments = usersComments;
     }
+
+    public long getValorPrioritat() {
+        return valorPrioritat;
+    }
+
+    public void setValorPrioritat(long valorPrioritat) {
+        this.valorPrioritat = valorPrioritat;
+    }
+
     /**
      * Funcio que ens permet referenciar els usuaris que han donat Like a un post concret
      * @param u Indica tots els usuaris de la plataforma, cosa que ens serveix per poder buscar-los per fer la
@@ -211,6 +222,8 @@ public class Post {
             }
         }
     }
+
+
 
     public void calculHaversine (float longitudRef, float latitudRef) {
         double dlatitud = Math.toRadians(latitudRef-this.location.get(0));

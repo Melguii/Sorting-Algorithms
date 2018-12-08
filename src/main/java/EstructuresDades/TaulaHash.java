@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaulaHash {
+
+    /**
+     *
+     * @param strings
+     * @param interes
+     * @param hashNoms
+     * @return
+     */
     public float [] indexarHash(List<String> strings, List<Float> interes, List <String> hashNoms) {
         int i;
         float [] hashMap = new float [strings.size()];
@@ -42,6 +50,13 @@ public class TaulaHash {
         }
         return hashMap;
     }
+
+    /**
+     *
+     * @param string
+     * @param hashNoms
+     * @return
+     */
     public int hash (String string, List <String> hashNoms) { //Mida del hashMap
         int valor = 0;
         int i;
@@ -76,6 +91,11 @@ public class TaulaHash {
         }
         return valor;
     }
+
+    /**
+     *
+     * @param hashNoms
+     */
     public void cleanHashes (List <String> hashNoms) {
         if (hashNoms != null) {
             for (int j = 0; j < hashNoms.size(); j++) {

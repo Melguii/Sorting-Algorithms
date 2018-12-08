@@ -181,7 +181,7 @@ public class User {
             trobarPost (posts.get(i).getCategory(),p,numeroInteraccions,0);
         }
         for (int w=0 ; w < p.size();w++){
-            percentatge = ((float)numeroInteraccions.get(w)/(likedPosts.size() + commentedPosts.size() + posts.size())) * 100;
+            percentatge = ((float)numeroInteraccions.get(w)/(likedPosts.size() + commentedPosts.size() + posts.size()));
             percentatgesCategories.add(percentatge);
         }
         return percentatgesCategories;
@@ -227,6 +227,7 @@ public class User {
             valorTotal = valorVisites + valorLikes + valorComments;
             nomsUsuaris.add(connections.get(i).getUsername());
             valorInteres.add(valorTotal);
+
         }
         return valorInteres;
     }
@@ -348,23 +349,23 @@ public class User {
         }
         else{
             if (c.compareTimestamps(tempsAct,maxim,43200)) {
-                valor = 0.95f;
+                valor = 0.85f;
             }
             else {
                 if (c.compareTimestamps(tempsAct,maxim,86400)) {
-                    valor = 0.9f;
+                    valor = 0.70f;
                 }
                 else {
                     if (c.compareTimestamps(tempsAct,maxim,259200)) {
-                        valor = 0.8f;
+                        valor = 0.65f;
                     }
                     else {
                         if (c.compareTimestamps(tempsAct,maxim,604800)) {
-                            valor = 0.7f;
+                            valor = 0.5f;
                         }
                         else {
                             if (c.compareTimestamps(tempsAct,maxim,1209600)) {
-                                valor = 0.5f;
+                                valor = 0.4f;
                             }
                             else {
                                 if (c.compareTimestamps(tempsAct,maxim,2419200)) {
@@ -373,7 +374,7 @@ public class User {
                                 else {
                                     //Entre 4 i 8 semanes
                                     if (c.compareTimestamps(tempsAct,maxim,4838400)) {
-                                        valor = 0.2f;
+                                        valor = 0.25f;
                                     }
                                     else {
                                         if (c.compareTimestamps(tempsAct,maxim,14515200)) {
@@ -409,7 +410,7 @@ public class User {
 
         interesUsuaris = interesUsuari (usernamesFollows); //Com obtenim els arrays resultatnts;
         valorTemporalitat = calculTemporalitat (postsFollows, propietarisPosts);
-        percentatgeCategories=interesCategoria (nomsCategories);
+        percentatgeCategories = interesCategoria (nomsCategories);
 
         float [] hashCategories;
         float [] hashInteresUsuaris;
@@ -417,7 +418,6 @@ public class User {
         TaulaHash h = new TaulaHash();
         hashCategories = h.indexarHash(nomsCategories, percentatgeCategories,hashNomsCategories);
         hashInteresUsuaris = h.indexarHash(usernamesFollows,interesUsuaris,hashNomsUsuaris);
-
         float percentatgeCat;
         float interesEnUsuari;
         float valorTemp;
@@ -439,16 +439,13 @@ public class User {
                 interesEnUsuari = 1f;
             }
             valorTemp = valorTemporalitat.get(w);
-            System.out.println("HOLA:" + interesEnUsuari);
-            System.out.println("HOLA2:" + percentatgeCat);
-            System.out.println("HOLA3:" + valorTemp);
-            valorPrioritat = (long) (10000 * Math.pow(interesEnUsuari * (Math.pow(10,percentatgeCat) / 10), valorTemp));
+            valorPrioritat = (long) (1000*(Math.pow(interesEnUsuari * 5 * ((Math.pow(10,percentatgeCat))/10), (valorTemp))));
             postsFollows.get(w).setValorPrioritat(valorPrioritat);
         }
         Comparator c = new ComparePrioritats();
         QuickSort q = new QuickSort();
         q.quickSort(postsFollows,c,0,postsFollows.size()-1);
-        for (int i=0; i < postsFollows.size();i++) {
+        for (int i= (postsFollows.size() - 1); i >= 0;i--) {
             System.out.println(postsFollows.get(i).getId() + "  " + postsFollows.get(i).getCategory() + " " + postsFollows.get(i).getValorPrioritat());
         }
     }

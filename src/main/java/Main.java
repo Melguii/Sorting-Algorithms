@@ -15,7 +15,7 @@ public class Main {
         //Llegim el fitxer Json amb array de object perque tenim la informacio al json de una sola classe, no de varies
         Gson gson = new Gson();
         Menu menu_fitxers = new Menu();
-        FileReader f = menu_fitxers.menuFitxers();
+        FileReader f = menu_fitxers.menuFitxers(args);
         if (f != null) {
             User[] users = gson.fromJson(f, User[].class);
             List<Post> p = new ArrayList <Post>();
@@ -35,7 +35,7 @@ public class Main {
                 users[i].referenciarPostComentats(p);
             }
             Menu m = new Menu();
-            m.implementacioMenu(users);
+            m.seleccioMenu(users,args);
         }
     }
 }

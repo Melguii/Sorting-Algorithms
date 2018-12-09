@@ -14,215 +14,246 @@ import java.util.Scanner;
 public class Menu {
     private int opcio;
 
-    /**
-     *
-     * @param users
-     */
-    public void implementacioMenu (User [] users) {
-        do {
-            mostrarMenu();
-            seleccioMenu(users);
-        } while (opcio != 4);
-    }
 
     /**
-     *
      * @param users
      */
-    private void seleccioMenu (User[] users) {
+    public void seleccioMenu(User[] users, String[] args) {
         Comparator c;
+        boolean error;
+        String s;
         List<Post> p = new ArrayList<Post>();
-        for (User u:users) {
-            for (Post p_aux:(u.getPosts())) {
+        for (User u : users) {
+            for (Post p_aux : (u.getPosts())) {
                 p.add(p_aux);
             }
         }
-        switch (opcio) {
-            case 1:
-                c = new CompareTemporalitat();
-                menuOrdenacio(p,c);
-                break;
-            case 2:
-                c = new CompareUbicacio();
-                float longitudRef;
-                float latitutRef;
-                System.out.println("Introdueixme una ubicacio:");
-                System.out.println("Longitud:");
-                Scanner sc = new Scanner(System.in);
-                longitudRef = sc.nextFloat();
-                System.out.println("Latitud:");
-                Scanner sc2 = new Scanner(System.in);
-                latitutRef = sc2.nextFloat();
-                //Calculem la distancia amb la formula del haversine per a cada post
-                for (Post post_aux2:p) {
-                    post_aux2.calculHaversine(longitudRef,latitutRef);
-                }
-                menuOrdenacio(p,c);
-                break;
-            case 3:
-                users[0].calculPrioritats();
-                break;
-            case 4:
-                break;
-            default:
-                System.out.println("Error, opcio no valida :(");
-                break;
-        }
-    }
-
-    /**
-     *
-     */
-    private void mostrarMenu () {
-        System.out.println("Benvingut a InstaSalle, el intragram per programadors de veritat");
-        System.out.println("\t1.Ordenar segons Temporalitat");
-        System.out.println("\t2.Ordenar segons Ubicacio");
-        System.out.println("\t3.Ordenar segons una combinacio de prioritats");
-        System.out.println("\t4.Sortir");
-        opcio = demanarOpcio();
-    }
-
-    /**
-     *
-     * @return
-     */
-    private int demanarOpcio () {
-        System.out.println("Introdueix opcio: ");
-        Scanner sc = new Scanner (System.in);
-        return sc.nextInt();
-    }
-
-    /**
-     *
-     * @param p
-     * @param c
-     */
-    private void menuOrdenacio(List<Post>p, Comparator c) {
-        int opcio_ordenacio;
+        s = args[0];
         do {
-            mostrarMenuOrdenacio();
-            opcio_ordenacio = demanarOpcio();
-            seleccioOrdenacio(p,c, opcio_ordenacio);
-        } while(opcio_ordenacio < 1 || opcio_ordenacio > 4);
-    }
-
-    /**
-     *
-     * @param p
-     * @param c
-     * @param opcio_ordenacio
-     */
-    private void seleccioOrdenacio (List<Post>p, Comparator c, int opcio_ordenacio) {
-        switch (opcio_ordenacio) {
-            case 1:
-                QuickSort q = new QuickSort();
-                q.quickSort(p,c,0, p.size()-1);
-                break;
-            case 2:
-                MergeSort m = new MergeSort();
-                m.mergeSort(p,c,0,p.size()-1);
-                break;
-            case 3:
-                RadixSort r = new RadixSort();
-                r.radixSort (p,c);
-                break;
-            case 4:
-                SelectionSort s = new SelectionSort();
-                s.selectionSort(p,c);
-                break;
-            default:
-                System.out.println("Opcio no valida, crec que t'has equivocat de carrera ༼ つ ◕_◕ ༽つ\n");
-        }
-        if (opcio_ordenacio >= 1 && opcio_ordenacio <= 4) {
+            if (s.equals("temporalitat")) {
+                c = new CompareTemporalitat();
+                seleccioOrdenacio(p, c, args);
+                error = false;
+            } else {
+                if (s.equals("ubicacio")) {
+                    c = new CompareUbicacio();
+                    float longitudRef;
+                    float latitutRef;
+                    error = false;
+                    longitudRef = Float.parseFloat(args[4]);
+                    latitutRef = Float.parseFloat(args[3]);
+                    //Calculem la distancia amb la formula del haversine per a cada post
+                    for (Post post_aux2 : p) {
+                        post_aux2.calculHaversine(longitudRef, latitutRef);
+                    }
+                    seleccioOrdenacio(p, c, args);
+                } else {
+                    if (s.equals("prioritats")) {
+                        User user;
+                        User[] users_2 = users.clone();
+                        users_2 = quickSort(users_2, 0, users_2.length - 1);
+                        user = busquedaUsuari(users_2, args[3]);
+                        error = false;
+                    } else {
+                        System.out.println("Error, primer parametre no valid :(");
+                        error = true;
+                        System.out.println("La nostra generositat no coneix limits, torna a introduit opcio:");
+                        Scanner sc = new Scanner(System.in);
+                        s = sc.nextLine();
+                    }
+                }
+            }
+        } while (error);
+        //Cambiar nomsss
+        if (args[0].equals("temporalitat") || args[0].equals("ubicacio") || args[0].equals("prioritats")) {
             int cursor = 1;
             System.out.println("\nORDENACIO\n");
-            for (Post p_aux:p) {
-                System.out.println(cursor+"."+ " " + p_aux.getComparacioUbicacio());
-                cursor++;
+            if (args[0].equals("temporalitat")) {
+                for (Post p_aux : p) {
+                    System.out.println(cursor + "." + " " + p_aux.getPublished());
+                    cursor++;
+                }
+                System.out.println("\n");
+            } else {
+                if (args[0].equals("ubicacio")) {
+                    for (Post p_aux : p) {
+                        System.out.println(cursor + "." + " " + p_aux.getComparacioUbicacio() + " " + p_aux.getLocation().get(0) + " " + p_aux.getLocation().get(1));
+                        cursor++;
+                    }
+                    System.out.println("\n");
+                } else {
+                    if (args[0].equals("prioritats")) {
+                        for (Post p_aux : p) {
+                            System.out.println(cursor + "." + " " + p_aux.getPublished() + " " + p_aux.getCategory());
+                            cursor++;
+                        }
+                        System.out.println("\n");
+                    }
+                }
             }
-            System.out.println("\n");
         }
+    }
 
+
+    private void seleccioOrdenacio(List<Post> p, Comparator c, String[] args) {
+        boolean error;
+        String s;
+        s = args[1];
+
+        do {
+            if (s.equals("Quicksort")) {
+                QuickSort q = new QuickSort();
+                q.quickSort(p, c, 0, p.size() - 1);
+                error = false;
+            } else {
+                if (s.equals("Mergesort")) {
+                    MergeSort m = new MergeSort();
+                    m.mergeSort(p, c, 0, p.size() - 1);
+                    error = false;
+                } else {
+                    if (s.equals("Radixsort")) {
+                        RadixSort r = new RadixSort();
+                        r.radixSort(p, c);
+                        error = false;
+                    } else {
+                        if (s.equals("Selectionsort")) {
+                            SelectionSort selct = new SelectionSort();
+                            selct.selectionSort(p, c);
+                            error = false;
+                        } else {
+                            System.out.println("Segon parametre no valid, crec que t'has equivocat de carrera ༼ つ ◕_◕ ༽つ\n");
+                            error = true;
+                            System.out.println("La nostra generositat no coneix limits, torna a introduit opcio:");
+                            Scanner sc = new Scanner(System.in);
+                            s = sc.nextLine();
+                        }
+                    }
+                }
+            }
+        } while (error == true);
     }
 
     /**
-     *
-     */
-    private void mostrarMenuOrdenacio () {
-        System.out.println("De quina forma vols stalkejar?:");
-        System.out.println("1.Fent un QuickSort, corre como el viento perdigon");
-        System.out.println("2.Fent un MergeSort, soc una persona practica");
-        System.out.println("3.Fent un RadixSort, he aprovat Mates");
-        System.out.println("4.Fent un SelectionSort, m'agraden les tortugues");
-    }
-
-    /**
-     *
      * @return
      */
-    public FileReader menuFitxers() {
-        int opcio_fitxer;
-        String nom_fitxer;
+    public FileReader menuFitxers(String[] args) {
         FileReader fitxer;
-        do {
-            mostrarMenuFitxers ();
-            opcio_fitxer = demanarOpcio();
-            fitxer = seleccioFitxer(opcio_fitxer);
-        } while(fitxer == null && opcio_fitxer != 5);
+        fitxer = seleccioFitxer(args);
         return fitxer;
     }
 
-    /**
-     *
-     * @param opcio_fitxer
-     * @return
-     */
-    private FileReader seleccioFitxer (int opcio_fitxer) {
+
+    private FileReader seleccioFitxer(String[] args) {
         FileReader fitxer = null;
         String ubicacio = new String();
-        switch (opcio_fitxer) {
-            case 1:
-                ubicacio= "datasets/xs_dataset.json";
-                break;
-            case 2:
-                ubicacio = "datasets/s_dataset.json";
-                break;
-            case 3:
-                ubicacio = "datasets/m_dataset.json";
-                break;
-            case 4:
-                System.out.println("Nom del fitxer que es vol obrir:");
-                InputStreamReader tmp = new InputStreamReader(System.in);
-                BufferedReader sc = new BufferedReader (tmp);
-                try {
-                    ubicacio = "datasets/" + sc.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 5:
-                break;
-        }
-        if (opcio_fitxer >= 1 && opcio_fitxer <= 4) {
+        ubicacio = "datasets/" + args[2];
+        do {
             try {
                 fitxer = new FileReader(ubicacio);
             } catch (FileNotFoundException e) {
                 System.out.println("Error fitxer especificat no trobat (ha d'estar a la carpeta datasets),no ens petaras \nel programa tan facilment, fem PAED (⌐■_■)");
+                System.out.println("La nostra generositat no coneix limits, trona'm a introduir nom del fitxer :):");
+                Scanner sc = new Scanner(System.in);
+                ubicacio = "datasets/" + sc.nextLine();
             }
-        }
+        } while (fitxer == null);
         return fitxer;
     }
+    private User busquedaUsuari (User[] users, String valorBuscat) {
+        User user = null;
+        User [] users_2;
+        users_2 = users.clone();
 
-    /**
-     *
-     */
-    private void mostrarMenuFitxers () {
-        System.out.println("Selecciona el fitxer que vols obrir");
-        System.out.println("1.Fitxer xs_dataset.json");
-        System.out.println("2.Fitxer s_dataset.json");
-        System.out.println("3.Fitxer m_dataset.json");
-        System.out.println("4.Tinc fitxer personalitzat, soc informatic/a");
-        System.out.println("5.Ho reconec, soc de ADE, treiueme d'aqui ಡ_ಡ");
+        int principi = 0;
+        int fin = users.length - 1;
+        int valor_resultat = 0;
+        int mig = (principi + fin)/2;
+        boolean b = false;
+        while (!b && (principi <= fin)){
+            mig = (principi + fin)/2;
+            if (users[mig].getUsername().equals(valorBuscat)) {
+                b = true;
+                valor_resultat = mig;
+            }
+            else {
+                if (users[principi].getUsername().equals(valorBuscat)) {
+                    b = true;
+                    valor_resultat = principi;
+                }
+                else {
+                    if (users[fin].getUsername().equals(valor_resultat)) {
+                        b = true;
+                        valor_resultat = fin;
+                    }
+                    else {
+                        if (users[mig].getUsername().compareTo(valorBuscat) > 0) {
+                            fin = mig - 1;
+                        } else {
+                            principi = mig + 1;
+                        }
+                    }
+                }
+            }
+        }
+        user = users[valor_resultat];
+        return user;
+    }
+    public User [] quickSort (User [] p, int i, int j) {
+        int s;
+        int t;
+        int array_aux_ij [] = new int [2];
+        int array_aux_st [] = new int [2];
+
+        if (i >= j) {
+            return p;
+        }
+        else{
+            array_aux_ij[0] = i;
+            array_aux_ij[1] = j;
+            array_aux_st = particio(p,array_aux_ij);
+            s = array_aux_st[0];
+            t = array_aux_st[1];
+            p = quickSort(p,i,t);
+            p = quickSort(p,s,j);
+        }
+        return p;
     }
 
+    private int [] particio (User [] p, int array_aux_ij[]) {
+        int mig;
+        User pivot;
+        User tmp = new User();
+        int s;
+        int t;
+        s = array_aux_ij[0];
+        t = array_aux_ij[1];
+        mig = (array_aux_ij[0] + array_aux_ij[1])/2;
+        pivot = p[mig];
+        while (s <= t) {
+            while (pivot.getUsername().compareTo(p[s].getUsername()) > 0) {
+                s = s + 1;
+            }
+            while(pivot.getUsername().compareTo(p[t].getUsername()) < 0) {
+                t = t - 1;
+            }
+            if (s < t) {
+                tmp = p[s];
+                p[s] = p[t];
+                p[t] = tmp;
+                s = s + 1;
+                t = t - 1;
+            }
+            else {
+                if (s == t) {
+                    s = s + 1;
+                    t = t - 1;
+                }
+            }
+        }
+        int [] array_aux_st = new int[2];
+        array_aux_st[0]= s;
+        array_aux_st[1]=t;
+
+        return array_aux_st;
+    }
 }

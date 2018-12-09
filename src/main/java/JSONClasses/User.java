@@ -388,44 +388,45 @@ public class User {
     private float assignarValor (long tempsAct, long maxim, CompareTimeStamps c) {
         float valor;
         //0h a 6h
-        if (c.compareTimestamps(tempsAct,maxim,21600)) {
+        if (c.compareTimestamps(tempsAct,maxim,3600)) {
             valor = 1;
         }
         else{
-            if (c.compareTimestamps(tempsAct,maxim,43200)) {
-                valor = 0.85f;
+            if (c.compareTimestamps(tempsAct, maxim, 10800)) {
+                valor = 0.9f;
             }
             else {
-                if (c.compareTimestamps(tempsAct,maxim,86400)) {
-                    valor = 0.70f;
-                }
-                else {
-                    if (c.compareTimestamps(tempsAct,maxim,259200)) {
-                        valor = 0.65f;
-                    }
-                    else {
-                        if (c.compareTimestamps(tempsAct,maxim,604800)) {
-                            valor = 0.5f;
-                        }
-                        else {
-                            if (c.compareTimestamps(tempsAct,maxim,1209600)) {
-                                valor = 0.4f;
-                            }
-                            else {
-                                if (c.compareTimestamps(tempsAct,maxim,2419200)) {
-                                    valor = 0.3f;
-                                }
-                                else {
-                                    //Entre 4 i 8 semanes
-                                    if (c.compareTimestamps(tempsAct,maxim,4838400)) {
-                                        valor = 0.25f;
-                                    }
-                                    else {
-                                        if (c.compareTimestamps(tempsAct,maxim,14515200)) {
-                                            valor = 0.1f;
-                                        }
-                                        else {
-                                            valor = 0.05f;
+                if (c.compareTimestamps(tempsAct, maxim, 21600)) {
+                    valor = 0.8f;
+                } else {
+                    if (c.compareTimestamps(tempsAct, maxim, 43200)) {
+                        valor = 0.70f;
+                    } else {
+                        if (c.compareTimestamps(tempsAct, maxim, 86400)) {
+                            valor = 0.60f;
+                        } else {
+                            if (c.compareTimestamps(tempsAct, maxim, 259200)) {
+                                valor = 0.50f;
+                            } else {
+                                if (c.compareTimestamps(tempsAct, maxim, 604800)) {
+                                    valor = 0.40f;
+                                } else {
+                                    if (c.compareTimestamps(tempsAct, maxim, 1209600)) {
+                                        valor = 0.3f;
+                                    } else {
+                                        if (c.compareTimestamps(tempsAct, maxim, 2419200)) {
+                                            valor = 0.25f;
+                                        } else {
+                                            //Entre 4 i 8 semanes
+                                            if (c.compareTimestamps(tempsAct, maxim, 4838400)) {
+                                                valor = 0.2f;
+                                            } else {
+                                                if (c.compareTimestamps(tempsAct, maxim, 14515200)) {
+                                                    valor = 0.1f;
+                                                } else {
+                                                    valor = 0.05f;
+                                                }
+                                            }
                                         }
                                     }
                                 }

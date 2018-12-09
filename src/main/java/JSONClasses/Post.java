@@ -150,8 +150,8 @@ public class Post {
      * @param latitudRef Indica la latitud objectiu
      */
     public void calculHaversine (float longitudRef, float latitudRef) {
-        double dlatitud = Math.toRadians(latitudRef-this.location.get(0));
-        double dlongitud = Math.toRadians(longitudRef-this.location.get(1));
-        comparacioUbicacio = (int) (100000 *(2 * Math.asin(Math.sqrt(Math.pow(Math.sin(dlatitud/2),(float)2)+Math.cos(this.location.get(0))*Math.cos(latitudRef)*Math.pow(Math.sin(dlongitud/2),2)))));
+        double dlatitud = latitudRef-this.location.get(0);
+        double dlongitud = longitudRef-this.location.get(1);
+        comparacioUbicacio = (int) (100000 *(2 * 6371* Math.asin(Math.sqrt(Math.pow(Math.sin(Math.toRadians(dlatitud/2)),(float)2)+Math.cos(Math.toRadians(this.location.get(0)))*Math.cos(Math.toRadians(latitudRef))*Math.pow(Math.sin(Math.toRadians(dlongitud/2)),2)))));
     }
 }

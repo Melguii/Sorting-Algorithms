@@ -35,38 +35,74 @@ public class User {
         this.postsComentats = new ArrayList <Post>();
     }
 
+    /**
+     * Getter de Link
+     * @return Informacio complerta actual de tots els usuaris que segueixen a un usuari en concret
+     */
     public List<User> getLink() {
         return link;
     }
 
+    /**
+     * Setter de Link
+     * @param link Es l'array de l'users que assignarem a el nostre array link
+     */
     public void setLink(List<User> link) {
         this.link = link;
     }
 
+    /**
+     * Get de Username
+     * @return El nom actual d'un usuari en concret
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Setter de Username
+     * @param username Nom d'usuari que assignem a un usuari en concret
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Getter de Followers
+     * @return Numero de followers que te actualment un usuari en concret
+     */
     public int getFollowers() {
         return followers;
     }
 
+    /**
+     * Setter de Followers
+     * @param followers Valor que volem assignar a els followers d'un usuari
+     */
     public void setFollowers(int followers) {
         this.followers = followers;
     }
 
+    /**
+     * Getter de Follows
+     * @return Numero de seguits actual de l'usuari
+     */
     public int getFollows() {
         return follows;
     }
 
+    /**
+     * Setter de Follows
+     * @param follows Numero de seguits que volem assignar a un usuari en concret
+     */
     public void setFollows(int follows) {
         this.follows = follows;
     }
 
+    /**
+     * Getter de connections
+     * @return Array de connections actual de l'usuari (conte tota la informacio de els usuaris amb qui l'usuari desitjat interacciona)
+     */
     public List<Connection> getConnections() {
         return connections;
     }

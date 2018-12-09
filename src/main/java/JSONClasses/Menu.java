@@ -53,6 +53,7 @@ public class Menu {
                         User[] users_2 = users.clone();
                         users_2 = quickSort(users_2, 0, users_2.length - 1);
                         user = busquedaUsuari(users_2, args[3]);
+                        user.calculPrioritats();
                         error = false;
                     } else {
                         System.out.println("Error, primer parametre no valid :(");

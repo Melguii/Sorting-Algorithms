@@ -137,7 +137,7 @@ public class Menu {
             int cursor = 1;
             System.out.println("\nORDENACIO\n");
             for (Post p_aux:p) {
-                System.out.println(cursor+"."+ " " + p_aux.getPublished());
+                System.out.println(cursor+"."+ " " + p_aux.getComparacioUbicacio());
                 cursor++;
             }
             System.out.println("\n");

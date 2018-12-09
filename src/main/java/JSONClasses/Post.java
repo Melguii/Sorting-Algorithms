@@ -10,8 +10,6 @@ public class Post {
     private String       category;
     private List<String> liked_by;
     private List<String> commented_by;
-    private List<User>   usersLikes;                //Informacio dels users que han donat like (ho sabem gracies linkedBy)
-    private List<User>   usersComments;             //Informacio dels users que han comentat (ho sabem gracies commentedBy)
     private long         comparacioUbicacio;        //Distancia entre usuaris
     private long        valorPrioritat;
 
@@ -38,8 +36,6 @@ public class Post {
         this.location = new ArrayList<Float>();
         this.liked_by = new ArrayList<String>();
         this.commented_by = new ArrayList<String>();
-        this.usersLikes = new ArrayList<User>();
-        this.usersComments = new ArrayList<User>();
     }
 
     /**
@@ -138,37 +134,6 @@ public class Post {
         this.commented_by = commented_by;
     }
 
-    /**
-     * Getter de usersLikes
-     * @return Valor actual de l'atribut tipus llista usersLikes
-     */
-    public List<User> getUsersLikes() {
-        return usersLikes;
-    }
-
-    /**
-     * Setter de usersLikes
-     * @param usersLikes Valor que assignem a l'atribut de tipus llista usersLikes
-     */
-    public void setUsersLikes(List<User> usersLikes) {
-        this.usersLikes = usersLikes;
-    }
-
-    /**
-     * Getter de usersComments
-     * @return Valor actual de l'atribut tipus llista usersComments
-     */
-    public List<User> getUsersComments() {
-        return usersComments;
-    }
-
-    /**
-     * Setter de usersComments
-     * @param usersComments Valor que volem assignar a l'atribut tipus llista usersComments
-     */
-    public void setUsersComments(List<User> usersComments) {
-        this.usersComments = usersComments;
-    }
 
     public long getValorPrioritat() {
         return valorPrioritat;
@@ -176,51 +141,6 @@ public class Post {
 
     public void setValorPrioritat(long valorPrioritat) {
         this.valorPrioritat = valorPrioritat;
-    }
-
-    /**
-     * Funcio que ens permet referenciar els usuaris que han donat Like a un post concret
-     * @param u Indica tots els usuaris de la plataforma, cosa que ens serveix per poder buscar-los per fer la
-     *          'traduccio' de String a User
-     */
-    public void referenciarUserLikes (User u[]){
-        boolean trobat;
-        int i;
-        for (String like:this.liked_by) {
-            trobat = false;
-            i = 0;
-            while (trobat == false && i < u.length) {
-
-                if (like.equals(u[i].getUsername())) {
-                    usersLikes.add(u[i]);
-                    trobat = true;
-                }
-                i++;
-            }
-        }
-    }
-
-    /**
-     * Funcio que ens permet referenciar els usuaris que han comentat un post concret
-     * @param u Indica tots els usuaris de la plataforma, cosa que ens serveix per poder buscar-los per fer
-     *          la 'traduccio' de String a User
-     */
-    public void referenciarUserComments (User u[]){
-        boolean trobat;
-        int i;
-        for (String comment:this.commented_by) {
-            trobat = false;
-            i = 0;
-            while (trobat == false && i < u.length) {
-
-                if (comment.equals(u[i].getUsername())) {
-                    usersComments.add(u[i]);
-                    trobat = true;
-                }
-
-                i++;
-            }
-        }
     }
 
 

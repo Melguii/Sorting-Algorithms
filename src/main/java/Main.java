@@ -1,6 +1,9 @@
+import Compare.Comparator;
+import Compare.CompareID;
 import JSONClasses.Menu;
 import JSONClasses.Post;
 import JSONClasses.User;
+import Sorts.MergeSort;
 import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,7 +12,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-
         //Llegim el fitxer Json amb array de object perque tenim la informacio al json de una sola classe, no de varies
         Gson gson = new Gson();
         Menu menu_fitxers = new Menu();
@@ -22,11 +24,12 @@ public class Main {
             for (int i = 0; i < users.length; i++) {
                 users[i].referenciarSeguidors(users);
                 for (int j = 0; j < users[i].getPosts().size(); j++) {
-                    users[i].getPosts().get(j).referenciarUserLikes(users);
-                    users[i].getPosts().get(j).referenciarUserComments(users);
                     p.add(users[i].getPosts().get(j));
                 }
             }
+            Comparator c = new CompareID();
+            MergeSort mergesort = new MergeSort ();
+            mergesort.mergeSort(p,c,0, p.size()-1);
             for (int i = 0; i < users.length; i++) {
                 users[i].referenciarPostAgradats(p);
                 users[i].referenciarPostComentats(p);

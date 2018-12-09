@@ -3,6 +3,8 @@ package JSONClasses;
 import Compare.*;
 import EstructuresDades.TaulaHash;
 import JSONClasses.Connection;
+import Sorts.MergeSort;
+import Sorts.MergeSortArrayInts;
 import Sorts.QuickSort;
 
 import java.util.ArrayList;
@@ -121,11 +123,14 @@ public class User {
         }
     }
 
-    /**
-     *
-     * @param p
-     */
-    public void referenciarPostAgradats (List <Post> p){
+    public void referenciarPostAgradats (List <Post> p) {
+        int valor;
+        for (int i = 0; i < likedPosts.size(); i++) {
+           valor = busquedaBinaria(likedPosts.get(i), p);
+           postsAgradats.add (p.get(valor));
+        }
+    }
+    /*public void referenciarPostAgradats (List <Post> p){
         boolean b;
         int j = 0;
         for (int i = 0; i < likedPosts.size(); i++) {
@@ -139,16 +144,21 @@ public class User {
                 j++;
             }
         }
-    }
+    }*/
 
     /**
      *
      * @param p
      */
     public void referenciarPostComentats (List <Post> p){
-        boolean b;
-        int j = 0;
+        //boolean b;
+        //int j = 0;
+        int valor;
         for (int i = 0; i < commentedPosts.size(); i++) {
+            valor = busquedaBinaria(commentedPosts.get(i), p);
+            postsComentats.add (p.get(valor));
+        }
+        /*for (int i = 0; i < commentedPosts.size(); i++) {
             j = 0;
             b = false;
             while (j < p.size() && b == false) {
@@ -158,9 +168,43 @@ public class User {
                 }
                 j++;
             }
-        }
+        }*/
     }
 
+    private int busquedaBinaria( int valorBuscat, List <Post> p) {
+        int principi = 0;
+        int fin = p.size() - 1;
+        int valor_resultat = 0;
+        int mig = (principi + fin)/2;
+        boolean b = false;
+        while (!b && (principi <= fin)){
+            mig = (principi + fin)/2;
+            if (p.get(mig).getId() == valorBuscat) {
+                b = true;
+                valor_resultat = mig;
+            }
+            else {
+                if (p.get(principi).getId() == valorBuscat) {
+                    b = true;
+                    valor_resultat = principi;
+                }
+                else {
+                    if (p.get(fin).getId() == valor_resultat) {
+                        b = true;
+                        valor_resultat = fin;
+                    }
+                    else {
+                        if (p.get(mig).getId() > valorBuscat) {
+                            fin = mig - 1;
+                        } else {
+                            principi = mig + 1;
+                        }
+                    }
+                }
+            }
+        }
+        return valor_resultat;
+    }
     /**
      *
      * @param p
@@ -439,7 +483,7 @@ public class User {
                 interesEnUsuari = 1f;
             }
             valorTemp = valorTemporalitat.get(w);
-            valorPrioritat = (long) (1000*(Math.pow(interesEnUsuari * 5 * ((Math.pow(10,percentatgeCat))/10), (valorTemp))));
+            valorPrioritat = (long) (1000*(Math.pow(interesEnUsuari * 10 * ((Math.pow(10,percentatgeCat))/10), (valorTemp))));
             postsFollows.get(w).setValorPrioritat(valorPrioritat);
         }
         Comparator c = new ComparePrioritats();

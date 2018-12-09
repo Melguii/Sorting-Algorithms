@@ -134,11 +134,18 @@ public class Post {
         this.commented_by = commented_by;
     }
 
-
+    /**
+     * Getter valor prioritat
+     * @return Valor de prioritat que te un post en concret
+     */
     public long getValorPrioritat() {
         return valorPrioritat;
     }
 
+    /**
+     * Setter de valor prioritat
+     * @param valorPrioritat Valor de prioritat que assignem a post (per tal de poder fer la comparacio)
+     */
     public void setValorPrioritat(long valorPrioritat) {
         this.valorPrioritat = valorPrioritat;
     }

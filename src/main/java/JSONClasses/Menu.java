@@ -71,7 +71,7 @@ public class Menu {
             System.out.println("\nORDENACIO\n");
             if (args[0].equals("temporalitat")) {
                 for (Post p_aux : p) {
-                    System.out.println(cursor + "." + " " + p_aux.getPublished());
+                    System.out.println(cursor + "." + " "+ p_aux.getId() + "  " + p_aux.getPublished());
                     cursor++;
                 }
                 System.out.println("\n");

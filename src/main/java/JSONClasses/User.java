@@ -107,30 +107,58 @@ public class User {
         return connections;
     }
 
+    /**
+     * Setter de connections
+     * @param connections Array de connections (que conte tota la informacio de les interaccions de l'usuari) que assignem a un usuari concret
+     */
     public void setConnections(List<Connection> connections) {
         this.connections = connections;
     }
 
+    /**
+     * Getter de posts
+     * @return Retornem l'array amb tota la informació dels posts que té l'usuari actualment
+     */
     public List<Post> getPosts() {
         return posts;
     }
 
+    /**
+     * Setter de posts
+     * @param posts Array de posts que volem assignar a un usuari en concret
+     */
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 
+    /**
+     * Getter de likedPosts
+     * @return Tots els Id dels posts que ha donat like l'usuari
+     */
     public List<Integer> getLikedPosts() {
         return likedPosts;
     }
 
+    /**
+     * Setter de likedPosts
+     * @param likedPosts Array de ints (ple de ids de posts) que volem assignar a un usuari en concret
+     */
     public void setLikedPosts(List<Integer> likedPosts) {
         this.likedPosts = likedPosts;
     }
 
+    /**
+     * Getter de CommentedPosts
+     * @return Tots els Id dels posts que ha comentat l'usuari
+     */
     public List<Integer> getCommentedPosts() {
         return commentedPosts;
     }
 
+    /**
+     *
+     * @param commentedPosts
+     */
     public void setCommentedPosts(List<Integer> commentedPosts) {
         this.commentedPosts = commentedPosts;
     }

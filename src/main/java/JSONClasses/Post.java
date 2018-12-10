@@ -11,7 +11,7 @@ public class Post {
     private List<String> liked_by;
     private List<String> commented_by;
     private long         comparacioUbicacio;        //Distancia entre usuaris
-    private long        valorPrioritat;
+    private long         valorPrioritat;
 
 
     /**

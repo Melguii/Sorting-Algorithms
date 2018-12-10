@@ -22,6 +22,8 @@ public class User {
     private List <Post>         postsAgradats;
     private List <Post>         postsComentats;
 
+    //Pepe don't do that :)
+
     /**
      * Constructor per a User, això el que ens permet establir que les List especificades seran ArrayList
      */

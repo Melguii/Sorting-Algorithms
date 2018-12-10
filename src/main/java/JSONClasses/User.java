@@ -211,8 +211,9 @@ public class User {
     }*/
 
     /**
-     *
-     * @param p
+     * Passem tots els ids de els post comentats a un tipus Post, osigui agafem tots els Id que s'inclouen en
+     * el commentedPost i els busquem en un array on hi ha tots els post , per tenir tota la seva informació a l'avast
+     * @param p Array que conté tots els posts de la plataforma
      */
     public void referenciarPostComentats (List <Post> p){
         //boolean b;
@@ -222,19 +223,16 @@ public class User {
             valor = busquedaBinaria(commentedPosts.get(i), p);
             postsComentats.add (p.get(valor));
         }
-        /*for (int i = 0; i < commentedPosts.size(); i++) {
-            j = 0;
-            b = false;
-            while (j < p.size() && b == false) {
-                if (p.get(j).getId() == commentedPosts.get(i)) {
-                    b = true;
-                    postsComentats.add(p.get(j));
-                }
-                j++;
-            }
-        }*/
+
     }
 
+    /**
+     * Busqueda binaria que ens facilita la busqueda de un Id concret en un array de post (Cost menor que una
+     * busqueda normal)
+     * @param valorBuscat Valor que busquem
+     * @param p Array de Post on busquem un valor en concret
+     * @return Posicio on s'ha trobat el id desitjat
+     */
     private int busquedaBinaria( int valorBuscat, List <Post> p) {
         int principi = 0;
         int fin = p.size() - 1;
@@ -269,12 +267,13 @@ public class User {
         }
         return valor_resultat;
     }
+
     /**
-     *
-     * @param p
-     * @return
+     * Calcula el percentatge de interes de l'usuari, segons la categoria del Post(basat en likes)
+     * @param p Array on tenim tots els noms de les categories que interessen a l'usuari (el passem buit,
+     *          després s'amplia
+     * @return Una llista amb tots els percentatges d'interes per a cada categoria
      */
-    //Calcula el percentatge de interes de l'usuari, segons la categoria del Post(basat en likes)
     private List <Float> interesCategoria (List <String> p) {
         List <Integer> numeroInteraccions = new ArrayList <Integer>();
         List <Float> percentatgesCategories = new ArrayList<Float>();
@@ -296,11 +295,14 @@ public class User {
     }
 
     /**
-     *
-     * @param s
-     * @param sRef
-     * @param numeroLikesCat
-     * @param j
+     * S'ocupa deanar comprovant si la categoria del Post esta introduida en el array de categories d'interes
+     * si no hi està s'afegeix i s'inicialitza l'array d'interaccions a 1, si hi esta simplement es suma un valor més
+     * a l'array d'interaccions
+     * @param s Nom de categoria que busquem
+     * @param sRef Array de categories on el busquem
+     * @param numeroLikesCat Array d'interaccions (despres es sumaran tots els valors i es dividiran entre total per obtenir
+     *                       el percentatge)
+     * @param j Index perquè al ser un metode que treballa amb la recursivitat, saber la posició on estem
      */
     private void trobarPost (String s,List <String> sRef,List <Integer> numeroLikesCat,int j) {
         if (sRef.size() == 0 || s.equals(sRef.get(j)) || (j == (sRef.size()-1))) {
@@ -318,9 +320,9 @@ public class User {
     }
 
     /**
-     *
-     * @param nomsUsuaris
-     * @return
+     * Calculem el valor que te l'usuari actual en un altre usuari
+     * @param nomsUsuaris Array amb tots els noms dels usuaris que tenim contacte (En un principi està buit)
+     * @return Array amb els percentatges d'interes per a cada usuari
      */
     private List <Float> interesUsuari (List<String> nomsUsuaris) {
         List <Float> valorInteres = new ArrayList<Float>();
@@ -341,9 +343,9 @@ public class User {
     }
 
     /**
-     *
-     * @param visites
-     * @return
+     * Calculem el valors de les visites realitzades a un usari, segons uns intervals especificats
+     * @param visites Numero de visites realitzades a un usuari en concret
+     * @return Valor que té el numero de visites introduit
      */
     private int calculValorVisits (int visites) {
         int valor;
@@ -382,10 +384,10 @@ public class User {
     }
 
     /**
-     *
-     * @param postsUsuari
-     * @param propietarisPost
-     * @return
+     * Calculem la temporalitat dels posts respecte al post mes recent
+     * @param postsUsuari Tots els posts que podrien apareixer per pantalla a l'usuari
+     * @param propietarisPost Llista de propiertaris dels posts en ordre respecte postsUsuari
+     * @return Llista amb els valors de temporalitat per cada post (ordenats segons postsUsuari)
      */
     private List <Float> calculTemporalitat (List <Post> postsUsuari, List <String> propietarisPost) {
         List <Float> valorsTemps = new ArrayList <Float>();
@@ -402,11 +404,12 @@ public class User {
     }
 
     /**
-     *
-     * @param postsUsuari
-     * @param i
-     * @param max
-     * @return
+     * Busqueda del valor maxim de temporalitat de un array de posts
+     * @param postsUsuari Array de posts que entren en la comparació
+     * @param i Posicio a la que estem del array, es necessaria perque és un mètode recursiu
+     * @param max Valor maxim en aquests moments, al ser una funcio recursiva el necessitem perque la seguent
+     *            crida pugui comparar-se amb aquest valor
+     * @return Retornem el valor maxim de timestamp de la llista de posts introduits
      */
     private long buscarMaxim (List <Post> postsUsuari,int i, long max) {
         if (i == postsUsuari.size()) {
@@ -422,10 +425,11 @@ public class User {
     }
 
     /**
-     *
-     * @param postsUsuari
-     * @param maximTemps
-     * @return
+     * Aquest metode detcta si treballem en timestamps de ms o s i crida a el metode assignarValor per
+     * calcular eun valor de temporalitat concret
+     * @param postsUsuari Llista amb tots els posts que li podrien apareixer a l'usuari per pantalla
+     * @param maximTemps Timestamp del post mes recent
+     * @return Valor temporalitat d'un post en concret
      */
     private List <Float> calculValorTemps (List <Post> postsUsuari, long maximTemps) {
         List <Float> valorsTemps = new ArrayList<Float>();
@@ -443,11 +447,11 @@ public class User {
     }
 
     /**
-     *
-     * @param tempsAct
-     * @param maxim
-     * @param c
-     * @return
+     * Assignem un valor de temporalitat segons uns intervals establerts (MAXIM: 1, MINIM:0.05)
+     * @param tempsAct és el temps del que volem obtindre el seu valor
+     * @param maxim Valor en timestamp del post més recent
+     * @param c Forma en que compararem (Si en ms o s)
+     * @return Retornem el valor de temporalitat
      */
     private float assignarValor (long tempsAct, long maxim, CompareTimeStamps c) {
         float valor;
@@ -504,9 +508,11 @@ public class User {
     }
 
     /**
-     *
+     * S'ocupa de adjuntar tots els pesos independents per calcular el valor de prioritats i
+     * així poder ordenar segons aquest.
+     * @return Retorna els posts amb el seu valor de prioritats
      */
-    public void calculPrioritats () {
+    public List <Post> calculPrioritats () {
         List <Float> interesUsuaris;
         List <String> usernamesFollows = new ArrayList<String>();
         List <Post> postsFollows = new ArrayList<Post>();
@@ -551,11 +557,6 @@ public class User {
             valorPrioritat = (long) (1000*(Math.pow(interesEnUsuari * 10 * ((Math.pow(10,percentatgeCat))/10), (valorTemp))));
             postsFollows.get(w).setValorPrioritat(valorPrioritat);
         }
-        Comparator c = new ComparePrioritats();
-        QuickSort q = new QuickSort();
-        q.quickSort(postsFollows,c,0,postsFollows.size()-1);
-        for (int i= (postsFollows.size() - 1); i >= 0;i--) {
-            System.out.println(postsFollows.get(i).getId() + "  " + postsFollows.get(i).getCategory() + " " + postsFollows.get(i).getValorPrioritat());
-        }
+        return postsFollows;
     }
 }

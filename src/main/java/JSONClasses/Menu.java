@@ -16,7 +16,9 @@ public class Menu {
 
 
     /**
-     * @param users
+     * Metode que ens permet realitzar una opcio o una altra segons els parametres introduits per argument
+     * @param users LLista d'usuaris carregada des del JSON
+     * @param args String dels arguments passats abans d'iniciar el programa
      */
     public void seleccioMenu(User[] users, String[] args) {
         Comparator c;
@@ -53,7 +55,9 @@ public class Menu {
                         User[] users_2 = users.clone();
                         users_2 = quickSort(users_2, 0, users_2.length - 1);
                         user = busquedaUsuari(users_2, args[3]);
-                        user.calculPrioritats();
+                        p = user.calculPrioritats();
+                        c = new ComparePrioritats();
+                        seleccioOrdenacio(p,c,args);
                         error = false;
                     } else {
                         System.out.println("Error, primer parametre no valid :(");
@@ -84,8 +88,10 @@ public class Menu {
                     System.out.println("\n");
                 } else {
                     if (args[0].equals("prioritats")) {
-                        for (Post p_aux : p) {
-                            System.out.println(cursor + "." + " " + p_aux.getPublished() + " " + p_aux.getCategory());
+                        Post p_aux;
+                        for (int index = p.size() - 1; index >= 0; index--) {
+                            p_aux = p.get(index);
+                            System.out.println(cursor + "." + " " + p_aux.getPublished() + " " + p_aux.getCategory() + " res:" + p_aux.getValorPrioritat());
                             cursor++;
                         }
                         System.out.println("\n");
@@ -95,12 +101,18 @@ public class Menu {
         }
     }
 
-
+    /**
+     * Metode que s'ocupa de escollir un metode d'ordenacio o un altre sgeons els arguments introduits
+     * @param p Llista de posts que volem ordenar
+     * @param c Tipus de comparador (Aquest varia, segons si el que volem comparar es ubicacio, temporalitat...)
+     * @param args String dels arguments passats abans d'iniciar el programa
+     */
     private void seleccioOrdenacio(List<Post> p, Comparator c, String[] args) {
         boolean error;
         String s;
         s = args[1];
-
+        long time_start, time_end;
+        time_start = System.currentTimeMillis();
         do {
             if (s.equals("Quicksort")) {
                 QuickSort q = new QuickSort();
@@ -132,10 +144,14 @@ public class Menu {
                 }
             }
         } while (error == true);
+        time_end = System.currentTimeMillis();
+        System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
     }
 
     /**
-     * @return
+     * S'ocupa de detectar quin és el fitxer escollit per obrir
+     * @param args String dels arguments passats abans d'iniciar el programa
+     * @return Retorna una variable tipus FileReader per tal que el fitxer pugui ser llegit/interpretat
      */
     public FileReader menuFitxers(String[] args) {
         FileReader fitxer;
@@ -143,7 +159,12 @@ public class Menu {
         return fitxer;
     }
 
-
+    /**
+     * Control del nom de fitxer introduit( mirem si es correcte o si no existeix, i per tant hem de mostrar un error)
+     * també establim que tots els fitxers estaran a la carpeta datasets
+     * @param args String dels arguments passats abans d'iniciar el programa
+     * @return Retorna una variable tipus FileReader per tal que el fitxer pugui ser llegit/interpretat
+     */
     private FileReader seleccioFitxer(String[] args) {
         FileReader fitxer = null;
         String ubicacio = new String();
@@ -160,6 +181,15 @@ public class Menu {
         } while (fitxer == null);
         return fitxer;
     }
+
+    /**
+     * Metode de busqueda binaria, per tal de buscar un username concret (concretament el que busquem
+     * és que ens passen per argument, per tal de poder mostrar la comparacio de prioritats d'aquell
+     * usuari en concret)
+     * @param users Array de users on buscarem el username introduit
+     * @param valorBuscat Username que buscarem en l'array
+     * @return Retornem tota la informacio del username trobat
+     */
     private User busquedaUsuari (User[] users, String valorBuscat) {
         User user = null;
         User [] users_2;
@@ -199,6 +229,14 @@ public class Menu {
         user = users[valor_resultat];
         return user;
     }
+
+    /**
+     * quickSort que ens servira per ordenar el array users per fer la busqueda binaria
+     * @param p Array de users que volem ordenar
+     * @param i Principi del array
+     * @param j Final del array
+     * @return Retornem el array introduit totalment ordenat
+     */
     public User [] quickSort (User [] p, int i, int j) {
         int s;
         int t;
@@ -220,6 +258,13 @@ public class Menu {
         return p;
     }
 
+    /**
+     * Metode que ens serveix per tal de poder realitzar correctament el quickSort
+     * @param p Array de users que volem ordenar
+     * @param array_aux_ij La i i la j en forma de array per tal  que el seu valor
+     *                     canvii tambe en el  metode quicksort
+     * @return Els nous valors de s i t
+     */
     private int [] particio (User [] p, int array_aux_ij[]) {
         int mig;
         User pivot;

@@ -195,21 +195,6 @@ public class User {
            postsAgradats.add (p.get(valor));
         }
     }
-    /*public void referenciarPostAgradats (List <Post> p){
-        boolean b;
-        int j = 0;
-        for (int i = 0; i < likedPosts.size(); i++) {
-            b = false;
-            j = 0;
-            while (j < p.size() && b == false) {
-                if (p.get(j).getId() == likedPosts.get(i)) {
-                    b = true;
-                    postsAgradats.add(p.get(j));
-                }
-                j++;
-            }
-        }
-    }*/
 
     /**
      * Passem tots els ids de els post comentats a un tipus Post, osigui agafem tots els Id que s'inclouen en
@@ -337,7 +322,7 @@ public class User {
             valorVisites = calculValorVisits (connections.get(i).getVisits());
             valorLikes = connections.get(i).getLikes();
             valorComments = connections.get(i).getComments();
-            valorTotal = valorVisites + valorLikes + valorComments;
+            valorTotal = valorVisites + valorLikes + (valorComments * 2);
             nomsUsuaris.add(connections.get(i).getUsername());
             valorInteres.add(valorTotal);
 
@@ -352,27 +337,27 @@ public class User {
      */
     private int calculValorVisits (int visites) {
         int valor;
-        if (visites < 8) {
+        if (visites < 4) {
             valor = 1;
         }
         else {
-            if (visites < 20) {
+            if (visites < 10) {
                 valor = 5;
             }
             else {
-                if (visites < 35) {
+                if (visites < 15) {
                     valor = 10;
                 }
                 else {
-                    if (visites < 50) {
+                    if (visites < 22) {
                         valor = 20;
                     }
                     else {
-                        if (visites < 75) {
+                        if (visites < 30) {
                             valor = 30;
                         }
                         else {
-                            if (visites < 150) {
+                            if (visites < 45) {
                                 valor = 50;
                             }
                             else {
@@ -422,16 +407,6 @@ public class User {
             j++;
         }
         return max;
-            /*if (i == postsUsuari.size()) {
-            return max;
-        }
-        else {
-            if (postsUsuari.get(i).getPublished() > max) {
-                max = postsUsuari.get(i).getPublished();
-            }
-            max = buscarMaxim(postsUsuari,i + 1, max);
-            return max;
-        }*/
     }
 
     /**
@@ -533,7 +508,7 @@ public class User {
         List <String> hashNomsCategories = new ArrayList<String>();
         List <String> propietarisPosts = new ArrayList<String>();
 
-        interesUsuaris = interesUsuari (usernamesFollows); //Com obtenim els arrays resultatnts;
+        interesUsuaris = interesUsuari (usernamesFollows);
         valorTemporalitat = calculTemporalitat (postsFollows, propietarisPosts);
         percentatgeCategories = interesCategoria (nomsCategories);
 

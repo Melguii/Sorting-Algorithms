@@ -69,13 +69,12 @@ public class Menu {
                 }
             }
         } while (error);
-        //Cambiar nomsss
-        /*if (args[0].equals("temporalitat") || args[0].equals("ubicacio") || args[0].equals("prioritats")) {
+        if (args[0].equals("temporalitat") || args[0].equals("ubicacio") || args[0].equals("prioritats")) {
             int cursor = 1;
             System.out.println("\nORDENACIO\n");
             if (args[0].equals("temporalitat")) {
-                for (Post p_aux : p) {
-                    System.out.println(cursor + "." + " "+ p_aux.getId() + "  " + p_aux.getPublished());
+                for (int y = (p.size() - 1);y >= 0;y--) {
+                    System.out.println(cursor + "." + " "+ p.get(y).getId() + "  " + p.get(y).getPublished());
                     cursor++;
                 }
                 System.out.println("\n");
@@ -98,7 +97,7 @@ public class Menu {
                     }
                 }
             }
-        }*/
+        }
     }
 
     /**

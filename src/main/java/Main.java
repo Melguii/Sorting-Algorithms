@@ -12,8 +12,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        long time_start, time_end;
-
 
         //Llegim el fitxer Json amb array de object perque tenim la informacio al json de una sola classe, no de varies
         Gson gson = new Gson();
@@ -24,14 +22,13 @@ public class Main {
 
         //Referenciem els follows de cada usuari i,
         // cada post amb els Usuaris que li fan like i comentaris per separat
-        time_start = System.currentTimeMillis();
+
         for (int i = 0; i < users.length; i++) {
             users[i].referenciarSeguidors(users);
             for (int j = 0; j < users[i].getPosts().size(); j++) {
                 p.add(users[i].getPosts().get(j));
             }
         }
-        time_end = System.currentTimeMillis();
 
         Comparator c = new CompareID();
         MergeSort mergesort = new MergeSort ();
@@ -42,6 +39,5 @@ public class Main {
         }
         Menu m = new Menu();
         m.seleccioMenu(users,args);
-        System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
     }
 }

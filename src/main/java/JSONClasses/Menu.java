@@ -70,7 +70,7 @@ public class Menu {
             }
         } while (error);
         //Cambiar nomsss
-        if (args[0].equals("temporalitat") || args[0].equals("ubicacio") || args[0].equals("prioritats")) {
+        /*if (args[0].equals("temporalitat") || args[0].equals("ubicacio") || args[0].equals("prioritats")) {
             int cursor = 1;
             System.out.println("\nORDENACIO\n");
             if (args[0].equals("temporalitat")) {
@@ -91,14 +91,14 @@ public class Menu {
                         Post p_aux;
                         for (int index = p.size() - 1; index >= 0; index--) {
                             p_aux = p.get(index);
-                            System.out.println(cursor + "." + " " + p_aux.getPublished() + " " + p_aux.getCategory() + " res:" + p_aux.getValorPrioritat());
+                            System.out.println(cursor + "." + " " + p_aux.getId() + " "+ p_aux.getPublished() + " " + p_aux.getCategory() + " res:" + p_aux.getValorPrioritat());
                             cursor++;
                         }
                         System.out.println("\n");
                     }
                 }
             }
-        }
+        }*/
     }
 
     /**

@@ -176,7 +176,6 @@ public class User {
         for (Connection c: connections) {
             trobat = false;
             i = 0;
-
             while (trobat == false && i < u.length) {
 
                 if (c.getUsername().equals(u[i].getUsername())) {
@@ -221,10 +220,12 @@ public class User {
         //boolean b;
         //int j = 0;
         int valor;
+        int hola;
         for (int i = 0; i < commentedPosts.size(); i++) {
             valor = busquedaBinaria(commentedPosts.get(i), p);
             postsComentats.add (p.get(valor));
         }
+        hola = 0;
 
     }
 
@@ -400,7 +401,7 @@ public class User {
                 propietarisPost.add(link.get(i).username);
             }
         }
-        maximTemps = buscarMaxim (postsUsuari,0,0);
+        maximTemps = buscarMaxim (postsUsuari);
         valorsTemps = calculValorTemps(postsUsuari, maximTemps);
         return valorsTemps;
     }
@@ -408,13 +409,20 @@ public class User {
     /**
      * Busqueda del valor maxim de temporalitat de un array de posts
      * @param postsUsuari Array de posts que entren en la comparació
-     * @param i Posicio a la que estem del array, es necessaria perque és un mètode recursiu
-     * @param max Valor maxim en aquests moments, al ser una funcio recursiva el necessitem perque la seguent
-     *            crida pugui comparar-se amb aquest valor
      * @return Retornem el valor maxim de timestamp de la llista de posts introduits
      */
-    private long buscarMaxim (List <Post> postsUsuari,int i, long max) {
-        if (i == postsUsuari.size()) {
+    private long buscarMaxim (List <Post> postsUsuari) {
+        int j = 0;
+        long max;
+        max = postsUsuari.get(0).getPublished();
+        while (j < postsUsuari.size()) {
+            if (postsUsuari.get(j).getPublished() > max) {
+                max = postsUsuari.get(j).getPublished();
+            }
+            j++;
+        }
+        return max;
+            /*if (i == postsUsuari.size()) {
             return max;
         }
         else {
@@ -423,7 +431,7 @@ public class User {
             }
             max = buscarMaxim(postsUsuari,i + 1, max);
             return max;
-        }
+        }*/
     }
 
     /**
@@ -556,7 +564,7 @@ public class User {
                 interesEnUsuari = 1f;
             }
             valorTemp = valorTemporalitat.get(w);
-            valorPrioritat = (long) (1000*(Math.pow(interesEnUsuari * 10 * ((Math.pow(10,percentatgeCat))/10), (valorTemp))));
+            valorPrioritat = (long) (100000*(Math.pow(interesEnUsuari * 10 * ((Math.pow(10,percentatgeCat))/10), (valorTemp))));
             postsFollows.get(w).setValorPrioritat(valorPrioritat);
         }
         return postsFollows;
